@@ -1,0 +1,40 @@
+# QualityNX - Supabase Configuration
+# Configuración para desarrollo local con Supabase CLI
+
+# Project reference (se genera al hacer supabase init)
+# project_id = "qualitynx-local"
+
+# Database
+db_port = 54322
+db_shadow_port = 54320
+
+# API
+api_port = 54321
+studio_port = 54323
+
+# Auth
+auth_port = 9999
+auth_site_url = "http://localhost:3000"
+auth_additional_redirect_urls = ["exp://localhost:8081", "http://localhost:8081"]
+
+# Storage
+storage_port = 54324
+storage_file_size_limit = "50MiB"
+
+# Realtime
+realtime_port = 54325
+
+# Edge Functions
+functions_port = 54326
+
+# Logs
+logs_port = 54327
+
+# Analytics
+analytics_port = 54328
+
+# Pooler
+pooler_port = 54329
+pooler_pool_mode = "transaction"
+pooler_default_pool_size = 20
+pooler_max_pool_size = 100

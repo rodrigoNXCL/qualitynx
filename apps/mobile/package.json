@@ -1,0 +1,32 @@
+{
+  "name": "mobile",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "dependencies": {
+    "@qualitynx/database": "*",
+    "@qualitynx/shared": "*",
+    "@supabase/supabase-js": "^2.43.0",
+    "expo": "~57.0.12",
+    "expo-secure-store": "~13.0.0",
+    "expo-status-bar": "~57.0.1",
+    "react": "19.2.3",
+    "react-native": "0.86.2",
+    "react-native-get-random-values": "^1.11.0",
+    "react-native-url-polyfill": "^2.0.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/react": "~19.2.2",
+    "eslint-config-expo": "^57.0.1",
+    "typescript": "~6.0.3"
+  },
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .ts,.tsx"
+  },
+  "private": true
+}

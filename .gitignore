@@ -1,0 +1,11 @@
+# Secrets locales — AGENTS.md 10 / 10.1
+.env.local
+.env
+.env.*
+!env.local.example
+
+# Entorno y dependencias
+node_modules
+dist
+build
+*.log

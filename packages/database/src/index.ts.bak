@@ -1,0 +1,266 @@
+/**
+ * QualityNX - Database Client
+ * 
+ * Cliente Supabase configurado para el monorepo.
+ * Compatible con web (Next.js) y mobile (React Native + Expo).
+ */
+
+import { createClient, SupabaseClient, User as SupabaseUser } from '@supabase/supabase-js';
+import type { Database } from './generated/database.types';
+import type { User, Company, UserRole, AuditLog, Evidence } from '@qualitynx/shared';
+
+// ============================================
+// TIPOS EXTENDIDOS
+// ============================================
+
+export type QualityNXSupabaseClient = SupabaseClient<Database>;
+
+export interface AuthUser extends SupabaseUser {
+  app_metadata: {
+    role?: UserRole;
+    company_id?: string;
+  };
+  user_metadata: {
+    full_name?: string;
+  };
+}
+
+// ============================================
+// CONFIGURACIÓN DE ENTORNO
+// ============================================
+
+const getSupabaseConfig = () => {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.EXPO_PUBLIC_SUPABASE_URL;
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
+  
+  if (!url || !anonKey) {
+    throw new Error(
+      'Missing Supabase configuration. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY (web) ' +
+      'or EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY (mobile)'
+    );
+  }
+  
+  return { url, anonKey };
+};
+
+// ============================================
+// CLIENTE SINGLETON (Web)
+// ============================================
+
+let webClient: QualityNXSupabaseClient | null = null;
+
+export function getSupabaseClient(): QualityNXSupabaseClient {
+  if (typeof window !== 'undefined') {
+    // Cliente del navegador (Next.js)
+    if (!webClient) {
+      const { url, anonKey } = getSupabaseConfig();
+      webClient = createClient<Database>(url, anonKey, {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true,
+        },
+      });
+    }
+    return webClient;
+  }
+  
+  // Server-side (Next.js API routes, Server Components)
+  const { url, anonKey } = getSupabaseConfig();
+  return createClient<Database>(url, anonKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+    },
+  });
+}
+
+// ============================================
+// CLIENTE PARA MOBILE (React Native)
+// ============================================
+
+import { Platform } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
+import 'react-native-get-random-values';
+import 'react-native-url-polyfill/auto';
+
+const ExpoSecureStoreAdapter = {
+  getItem: (key: string) => SecureStore.getItemAsync(key),
+  setItem: (key: string, value: string) => SecureStore.setItemAsync(key, value),
+  removeItem: (key: string) => SecureStore.deleteItemAsync(key),
+};
+
+let mobileClient: QualityNXSupabaseClient | null = null;
+
+export function getMobileSupabaseClient(): QualityNXSupabaseClient {
+  if (!mobileClient) {
+    const { url, anonKey } = getSupabaseConfig();
+    mobileClient = createClient<Database>(url, anonKey, {
+      auth: {
+        storage: ExpoSecureStoreAdapter,
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: false,
+      },
+    });
+  }
+  return mobileClient;
+}
+
+// ============================================
+// HELPERS DE AUTENTICACIÓN
+// ============================================
+
+export async function signIn(email: string, password: string) {
+  const client = getSupabaseClient();
+  const { data, error } = await client.auth.signInWithPassword({ email, password });
+  return { data, error };
+}
+
+export async function signOut() {
+  const client = getSupabaseClient();
+  const { error } = await client.auth.signOut();
+  return { error };
+}
+
+export async function getCurrentUser() {
+  const client = getSupabaseClient();
+  const { data: { user }, error } = await client.auth.getUser();
+  return { user: user as AuthUser | null, error };
+}
+
+export async function getCurrentSession() {
+  const client = getSupabaseClient();
+  const { data: { session }, error } = await client.auth.getSession();
+  return { session, error };
+}
+
+export function onAuthStateChange(callback: (event: string, session: any) => void) {
+  const client = getSupabaseClient();
+  return client.auth.onAuthStateChange(callback);
+}
+
+// ============================================
+// HELPERS DE USUARIOS Y EMPRESAS
+// ============================================
+
+export async function getUserProfile(userId: string) {
+  const client = getSupabaseClient();
+  const { data, error } = await client
+    .from('users')
+    .select('*, companies(*)')
+    .eq('auth_id', userId)
+    .single();
+  return { data: data as (User & { companies: Company | null }) | null, error };
+}
+
+export async function getUserCompany(userId: string) {
+  const client = getSupabaseClient();
+  const { data, error } = await client
+    .from('users')
+    .select('company_id, companies(*)')
+    .eq('auth_id', userId)
+    .single();
+  return { data, error };
+}
+
+export async function isSuperAdmin(userId: string): Promise<boolean> {
+  const client = getSupabaseClient();
+  const { data, error } = await client
+    .rpc('is_super_admin');
+  return data === true && !error;
+}
+
+// ============================================
+// HELPERS DE AUDITORÍA
+// ============================================
+
+export async function getAuditLogs(params: {
+  entityType?: string;
+  entityId?: string;
+  companyId?: string;
+  userId?: string;
+  action?: string;
+  limit?: number;
+  offset?: number;
+  startDate?: string;
+  endDate?: string;
+}) {
+  const client = getSupabaseClient();
+  let query = client.from('audit_logs').select('*', { count: 'exact' });
+  
+  if (params.entityType) query = query.eq('entity_type', params.entityType);
+  if (params.entityId) query = query.eq('entity_id', params.entityId);
+  if (params.companyId) query = query.eq('company_id', params.companyId);
+  if (params.userId) query = query.eq('user_id', params.userId);
+  if (params.action) query = query.eq('action', params.action);
+  if (params.startDate) query = query.gte('created_at', params.startDate);
+  if (params.endDate) query = query.lte('created_at', params.endDate);
+  
+  query = query
+    .order('created_at', { ascending: false })
+    .range(params.offset || 0, (params.offset || 0) + (params.limit || 50) - 1);
+  
+  const { data, error, count } = await query;
+  return { data: data as AuditLog[], error, count };
+}
+
+// ============================================
+// HELPERS DE STORAGE (EVIDENCIAS)
+// ============================================
+
+export async function uploadEvidence(
+  file: File | Blob,
+  path: string,
+  options?: { contentType?: string; upsert?: boolean }
+) {
+  const client = getSupabaseClient();
+  const { data, error } = await client.storage
+    .from('evidence')
+    .upload(path, file, {
+      contentType: options?.contentType,
+      upsert: options?.upsert ?? false,
+    });
+  return { data, error };
+}
+
+export async function getEvidenceUrl(path: string) {
+  const client = getSupabaseClient();
+  const { data } = client.storage.from('evidence').getPublicUrl(path);
+  return data.publicUrl;
+}
+
+export async function deleteEvidence(path: string) {
+  const client = getSupabaseClient();
+  const { error } = await client.storage.from('evidence').remove([path]);
+  return { error };
+}
+
+export async function listEvidence(prefix: string) {
+  const client = getSupabaseClient();
+  const { data, error } = await client.storage.from('evidence').list(prefix);
+  return { data, error };
+}
+
+// ============================================
+// TIPOS DE BASE DE DATOS (generados)
+// ============================================
+
+// Estos tipos se generan con: npm run db:generate
+// Ver packages/database/scripts/generate-types.ts
+
+export type Tables = Database['public']['Tables'];
+export type Enums = Database['public']['Enums'];
+export type Functions = Database['public']['Functions'];
+
+// Helpers de tipos para tablas principales
+export type CompanyRow = Tables['companies']['Row'];
+export type CompanyInsert = Tables['companies']['Insert'];
+export type CompanyUpdate = Tables['companies']['Update'];
+
+export type UserRow = Tables['users']['Row'];
+export type UserInsert = Tables['users']['Insert'];
+export type UserUpdate = Tables['users']['Update'];
+
+export type AuditLogRow = Tables['audit_logs']['Row'];
+export type AuditLogInsert = Tables['audit_logs']['Insert'];

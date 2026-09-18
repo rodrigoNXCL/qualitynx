@@ -1,0 +1,27 @@
+{
+  "name": "qualitynx",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace=apps/web",
+    "dev:mobile": "npm run dev --workspace=apps/mobile",
+    "build:web": "npm run build --workspace=apps/web",
+    "build:mobile": "npm run build --workspace=apps/mobile",
+    "lint": "npm run lint --workspaces",
+    "typecheck": "npm run typecheck --workspaces",
+    "db:generate": "npm run db:generate --workspace=packages/database",
+    "db:push": "npm run db:push --workspace=packages/database",
+    "db:studio": "npm run db:studio --workspace=packages/database",
+    "db:reset": "npm run db:reset --workspace=packages/database",
+    "migration:new": "npm run migration:new --workspace=packages/database"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "typescript": "^5.4.0"
+  },
+  "packageManager": "npm@10.5.0"
+}

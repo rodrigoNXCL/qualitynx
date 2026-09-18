@@ -1,0 +1,27 @@
+{
+  "name": "@qualitynx/database",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "db:generate": "supabase gen types typescript --local > src/generated/database.types.ts",
+    "db:push": "supabase db push",
+    "db:studio": "supabase studio",
+    "db:reset": "supabase db reset",
+    "migration:new": "supabase migration new"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.43.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.67.0",
+    "@typescript-eslint/parser": "^8.67.0",
+    "eslint": "^9.39.5",
+    "supabase": "^1.160.0",
+    "typescript": "^5.4.0"
+  }
+}
