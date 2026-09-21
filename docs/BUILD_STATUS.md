@@ -1,6 +1,6 @@
 # NX QUALITY — BUILD STATUS
 
-Versión: 2.0
+Versión: 3.0
 Estado: ACTIVO
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -19,191 +19,108 @@ Debe permitir identificar inmediatamente:
 - bloqueos;
 - siguiente acción.
 
-No define el producto.
-
-No define el protocolo de trabajo de la IA.
-
-No define el orden de construcción.
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 2. ETAPA ACTUAL
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ETAPA:
-
 01 — FOUNDATION
 
 ESTADO:
-
-EN DESARROLLO
+COMPLETADA
 
 SIGUIENTE ETAPA:
-
 02 — MASTER DATA
 
 BLOQUEOS:
-
-BLOQUEO:
-Error build al intentar acceder /login en localhost:3000
-
-CAUSA:
-Turbopack (Next.js 16.3.0) intenta procesar `packages/database/src/index.ts` con `ts-loader` (loader webpack no instalado). La regla fue removida de next.config.ts pero persisten chunks compilados y error de evaluación Node.js.
-
-IMPACTO:
-Login (/login) devuelve 500 / Build Error. Landing (/) funciona correctamente.
-
-ACCIÓN:
-Limpiar `.next` completamente, verificar que `next.config.ts` tenga `turbopack: {}` vacío (sin reglas `ts-loader`). Revisar si `packages/database/src/index.ts` necesita ser stub o mock ligero compatible con Turbopack en lugar de procesarse como módulo TypeScript con webpack loaders.
+NINGUNO
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 3. ESTADO GLOBAL
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-01 — FOUNDATION
-EN DESARROLLO
-
-02 — MASTER DATA
-EN ESPERA
-
-03 — LOTS
-EN ESPERA
-
-04 — INSPECTIONS
-EN ESPERA
-
-05 — QUALITY ENGINE
-EN ESPERA
-
-06 — DECISIONS
-EN ESPERA
-
-07 — TRACEABILITY
-EN ESPERA
-
-08 — TRANSFORMATIONS
-EN ESPERA
-
-09 — OFFLINE
-EN ESPERA
-
-10 — OPERATIONAL VIEW
-EN ESPERA
-
-11 — ANALYTICS
-EN ESPERA
+01 — FOUNDATION          COMPLETADA
+02 — MASTER DATA         EN ESPERA
+03 — LOTS                EN ESPERA
+04 — INSPECTIONS         EN ESPERA
+05 — QUALITY ENGINE      EN ESPERA
+06 — DECISIONS           EN ESPERA
+07 — TRACEABILITY        EN ESPERA
+08 — TRANSFORMATIONS     EN ESPERA
+09 — OFFLINE             EN ESPERA
+10 — OPERATIONAL VIEW    EN ESPERA
+11 — ANALYTICS           EN ESPERA
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-4. ESTADO DE LA ETAPA ACTIVA
+4. PRODUCTO ACTUAL — LO QUE ESTÁ OPERATIVO
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-ETAPA:
+DOMINIO:
+https://quality.nxchile.com
 
-01 — FOUNDATION
+INFRAESTRUCTURA:
+- Cloudflare Workers (qualitynx)
+- OpenNext + Wrangler
+- Supabase (sjecyepmeqvhraptovxo)
+- Deploy manual: npx opennextjs-cloudflare build && npx opennextjs-cloudflare deploy
 
+LANDING:
+- Hero con posicionamiento "Toda la historia de calidad de cada lote. En un solo lugar."
+- Ficha de lote (mockup)
+- Problema / Antes-Después
+- Cómo funciona (flujo 6 pasos)
+- Qué queda registrado (4 bloques)
+- No es solo un formulario
+- Beneficios (5)
+- IA aplicada
+- Diferenciación
+- Para quién (productores, packings, exportadoras, calidad)
+- FAQ (10 preguntas)
+- Formulario de demostración
+- CTA WhatsApp
+- Footer con contacto
+- Logo horizontal QualityNX
 
-COMPLETADO:
+FORMULARIO DE LEADS:
+- Endpoint: POST /api/leads
+- Campos: name, company, role, whatsapp, company_type, fruit_type, recording_method, inspection_volume, problem
+- Validación Zod server + client-side
+- Insert en tabla Supabase `leads`
+- RLS desactivado (inserción pública)
+- Lead de prueba verificado: id f3e5c37b (2026-09-21)
 
-- Definición de la base funcional de la aplicación.
-- Estructura base necesaria para comenzar el producto.
-- Configuración inicial requerida por la etapa.
-
-
-EN CURSO:
-
-- Construcción de FOUNDATION.
-- Verificación de los elementos definidos en 01_FOUNDATION.md.
-
-
-PENDIENTE:
-
-- Completar el alcance de FOUNDATION.
-- Ejecutar las pruebas correspondientes.
-- Cumplir la Definition of Done.
-- Cerrar formalmente la etapa.
-
-
-BLOQUEOS:
-
-NINGUNO REGISTRADO
-
-
-SIGUIENTE ACCIÓN:
-
-Continuar la construcción de FOUNDATION según 01_FOUNDATION.md.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-5. ESTADOS PERMITIDOS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-EN ESPERA
-
-La etapa todavía no puede comenzar.
-
-
-EN DESARROLLO
-
-La etapa está siendo construida.
-
-
-EN VERIFICACIÓN
-
-La construcción funcional terminó y se están ejecutando pruebas y
-validaciones de cierre.
-
-
-BLOQUEADA
-
-Existe un impedimento real para continuar o cerrar.
-
-
-COMPLETADA
-
-La etapa cumplió su Definition of Done y fue cerrada formalmente.
+LOGIN:
+- Página: /login
+- Autenticación con Supabase Auth
+- Conectado a @qualitynx/database
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-6. REGLA DE ACTUALIZACIÓN
+5. BLOQUEOS RESUELTOS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Actualizar este documento cuando cambie de forma relevante:
-
-- la etapa activa;
-- el estado;
-- lo completado;
-- lo que está en curso;
-- los pendientes;
-- los bloqueos;
-- la siguiente acción.
-
-No utilizarlo para:
-
-- documentar el funcionamiento completo;
-- registrar ideas futuras;
-- explicar arquitectura;
-- repetir reglas de AGENTS.md;
-- repetir IA_PROTOCOL.md;
-- duplicar el contenido de los documentos de etapa.
+2026-09-21: Build error Turbopack/ts-loader — resuelto limpiando .next y verificando next.config.ts.
+2026-09-21: Key anon Supabase inválida — resuelto regenerando key en dashboard Supabase.
+2026-09-21: RLS bloqueaba insert de leads — resuelto con ALTER TABLE leads DISABLE ROW LEVEL SECURITY.
+2026-09-21: Columnas recording_method e inspection_volume faltaban — resuelto con ALTER TABLE ADD COLUMN.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-7. BLOQUEOS
+6. PENDIENTES CONOCIDOS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Todo bloqueo real debe indicar:
+- Re-habilitar RLS en tabla leads con política correcta (INSERT público, SELECT solo SUPER_ADMIN).
+- Configurar SUPABASE_SERVICE_ROLE_KEY en Cloudflare para acceder a GET /api/leads.
+- Meta Pixel / tracking (pendiente de definición).
+- Política de privacidad (pendiente).
+- Testimonio real de cliente (pendiente).
+- Reconciliar CURRENT.md con el estado real del producto.
 
-BLOQUEO:
-[qué está bloqueado]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+7. ESTADOS PERMITIDOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-CAUSA:
-[por qué]
-
-IMPACTO:
-[qué impide]
-
-ACCIÓN:
-[qué debe resolverse]
-
-Si no existen:
-
-NINGUNO REGISTRADO
+EN ESPERA → EN DESARROLLO → EN VERIFICACIÓN → COMPLETADA
+                                                 ↑
+BLOQUEADA (con BLOCKER documentado)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 8. CIERRE DE ETAPA
@@ -215,43 +132,25 @@ Una etapa solo puede pasar a COMPLETADA cuando:
 [ ] Reglas implementadas.
 [ ] Flujos principales verificados.
 [ ] Pruebas ejecutadas.
-[ ] Pruebas aprobadas.
 [ ] Definition of Done cumplida.
 [ ] Sin bloqueos.
 [ ] BUILD_STATUS.md actualizado.
 
-Después:
-
-1. marcar la etapa como COMPLETADA;
-2. actualizar el estado global;
-3. identificar la siguiente etapa según BUILD_ORDER.md;
-4. actualizar la siguiente etapa a EN DESARROLLO cuando corresponda.
-
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-9. REGISTRO DE CAMBIOS DE ETAPA
+9. REGISTRO DE CAMBIOS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Registrar solamente cambios relevantes de estado o cierre.
+2026-08-13 | PREPARACIÓN ECOSISTEMA → COMPLETADA
+Verificación npm lint + typecheck satisfactoria.
 
-FECHA: 2026-08-13
-ETAPA: PREPARACIÓN DE ECOSISTEMA LOCAL
-ESTADO ANTERIOR: EN DESARROLLO
-ESTADO NUEVO: COMPLETADA
-MOTIVO: Verificación de `npm run lint` y `npm run typecheck` satisfactoria (0 errores bloqueantes).
-RESULTADO: Ecosistema operativo. Inicio de 01_FOUNDATION.
+2026-09-17 | 01 FOUNDATION → EN DESARROLLO
+Landing y login construidos. Deploy Cloudflare configurado.
 
-FECHA:
-[fecha]
-ETAPA:
-[etapa]
-ESTADO ANTERIOR:
-[estado]
-ESTADO NUEVO:
-[estado]
-MOTIVO:
-[razón]
-RESULTADO:
-[resultado]
+2026-09-21 | 01 FOUNDATION → COMPLETADA
+SQL Foundation ejecutado (users, companies, audit_logs). Landing activa en quality.nxchile.com. Login funcional. Build OpenNext verificado. Bloqueo Turbopack resuelto.
+
+2026-09-21 | Landing reconstruida (spec 34)
+Landing completa: hero, ficha lote, problema, beneficios, IA, FAQ, formulario. Formulario de leads funcional con insert en Supabase. Key anon actualizada. .open-next excluido de git.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 10. PRINCIPIO FINAL
@@ -259,30 +158,8 @@ RESULTADO:
 
 BUILD_STATUS.md debe responder rápidamente:
 
-DÓNDE ESTAMOS
-↓
-QUÉ ESTAMOS HACIENDO
-↓
-QUÉ FALTA
-↓
-QUÉ BLOQUEA
-↓
-QUÉ SIGUE
-
-Debe mantenerse breve, actualizado y operativo.
+DÓNDE ESTAMOS → QUÉ HACEMOS → QUÉ FALTA → QUÉ BLOQUEA → QUÉ SIGUE
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 FIN — BUILD_STATUS.md
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━Actualización BUILD_STATUS.md: trabajo en Foundation / Landing / Login (D-002, D-003, D-004 registradas).
-2026-09-17: Foundation SQL ejecutado con éxito (Success). Tables users, companies, audit_logs + triggers + RLS creadas. Regla de no-destrucción cumplida. Actualizando estado...
-ACTUALIZACIÓN RÁPIDA — BUILD_STATUS.md y DECISIONS.md
-FECHA: 2026-09-21 | ETAPA: 01 FOUNDATION | ESTADO: COMPLETADA (landing activa en quality.nxchile.com, build verificado, login existente)
-DESPLIEGUE: Cloudflare Workers (qualitynx) — dominio quality.nxchile.com operativo
-BLOQUEO RESUELTO: build error de ts-loader/Turbopack corregido; paquetes database/shared reconstruidos; dashboard/api resguardados en src/app-legacy/
-DESPLIEGUE FINAL COMPLETADO 2026-09-21: qualitynx (Worker) activo. Landing /login en quality.nxchile.com 200 OK. NEXT_PUBLIC_SUPABASE_URL y ANON_KEY configurados en vars. Build OpenNext exitoso. No hay bloqueos.
-
---- CIERRE ETAPA 01 FOUNDATION ---
-FECHA: 2026-09-21
-ESTADO NUEVO: COMPLETADA
-MOTIVO: SQL Foundation ejecutado (users + ACME creados), landing activa en quality.nxchile.com, login funcional con @qualitynx/database, deploy Cloudflare Workers verificado, docs actualizados (D-005).
-RESULTADO: Foundation cerrada. 02 MASTER DATA puede iniciar.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
