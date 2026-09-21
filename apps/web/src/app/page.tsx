@@ -83,7 +83,7 @@ export default function LandingPage() {
       <section className="bg-[#f0efe9] px-6 py-20 md:px-8" id="lote">
         <div className="mx-auto max-w-5xl">
           <p className="mb-3 text-center text-xs font-bold uppercase tracking-[0.2em] text-[#8fa868]">Lo que verás</p>
-          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">Una ficha real de lote.</h2>
+          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">Una ficha de lote en QualityNX.</h2>
           <div className="mx-auto grid max-w-3xl gap-6 md:grid-cols-2">
             {/* Ficha */}
             <div className="rounded-2xl border border-[#1a1a1a]/10 bg-white p-6 shadow-sm">
@@ -296,7 +296,21 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ===== 10. IA ===== */}
+      {/* ===== 10. OPERACIÓN EN TERRENO ===== */}
+      <section className="bg-[#1a1a1a] px-6 py-20 text-white md:px-8">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#8fa868]">Operación en terreno</p>
+          <h2 className="mb-6 text-3xl font-bold tracking-tight md:text-4xl">
+            Calidad también ocurre donde<br className="hidden md:block" /> la conectividad no siempre está disponible.
+          </h2>
+          <p className="mx-auto max-w-2xl text-lg leading-relaxed text-white/60">
+            QualityNX está diseñado para llevar el registro de inspecciones al terreno, manteniendo la información asociada al lote incluso en operaciones donde la conectividad puede ser limitada.
+          </p>
+          <p className="mt-4 text-sm font-medium text-[#8fa868]">Próximamente: registro offline para operaciones en terreno.</p>
+        </div>
+      </section>
+
+      {/* ===== 11. IA ===== */}
       <section className="bg-[#FAFAF7] px-6 py-20 md:px-8" id="ia">
         <div className="mx-auto max-w-4xl">
           <p className="mb-3 text-center text-xs font-bold uppercase tracking-[0.2em] text-[#8fa868]">Inteligencia Artificial</p>
@@ -335,6 +349,7 @@ export default function LandingPage() {
               ['Evidencia', 'Las fotografías y registros permanecen vinculados a la información correspondiente.'],
               ['Consulta', 'La información histórica puede recuperarse y analizarse.'],
               ['IA aplicada', 'La IA trabaja sobre el conocimiento acumulado de la empresa.'],
+              ['Operación en terreno', 'Diseñado para operación en terreno, con funcionalidad offline en desarrollo.'],
             ].map(([title, desc]) => (
               <div key={title as string} className="rounded-2xl border border-[#1a1a1a]/8 bg-white p-6 shadow-sm">
                 <p className="text-lg font-bold">{title}</p>
@@ -368,10 +383,10 @@ export default function LandingPage() {
       {/* ===== 13. PRUEBA SOCIAL ===== */}
       <section className="bg-[#1a1a1a] px-6 py-20 text-white md:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#8fa868]">En desarrollo</p>
-          <h2 className="mb-8 text-3xl font-bold tracking-tight md:text-4xl">Próximamente en operación.</h2>
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#8fa868]">Próximas implementaciones</p>
+          <h2 className="mb-8 text-3xl font-bold tracking-tight md:text-4xl">QualityNX está preparado para comenzar.</h2>
           <p className="text-lg leading-relaxed text-white/60">
-            QualityNX está siendo desarrollado para productores, packings y exportadoras de fruta. Pronto contaremos con testimonios de operaciones reales.
+            QualityNX está preparado para comenzar sus primeras implementaciones en productores, packings y exportadoras de fruta. Pronto incorporaremos experiencias y resultados de operaciones reales.
           </p>
         </div>
       </section>
@@ -415,13 +430,13 @@ export default function LandingPage() {
           <div className="space-y-4">
             {[
               ['¿Para qué tipo de empresas está diseñado QualityNX?', 'Para productores, packings y exportadoras de fruta que necesitan controlar y recuperar información histórica de calidad y trazabilidad.'],
-              ['¿Se puede utilizar para diferentes tipos de fruta?', 'Sí. QualityNX está diseñado para registrar información de calidad de cualquier tipo de fruta.'],
+              ['¿Se puede utilizar para diferentes tipos de fruta?', 'Sí. QualityNX puede configurarse para distintos tipos de fruta y controles de calidad según las necesidades de cada operación.'],
               ['¿Puedo registrar fotografías de las inspecciones?', 'Sí. Cada inspección puede incluir evidencia fotográfica vinculada al lote.'],
               ['¿La información queda vinculada al lote?', 'Sí. Todo — inspecciones, resultados, evidencia y trazabilidad — permanece relacionado con el lote.'],
               ['¿Puedo consultar el historial de un lote?', 'Sí. Puedes reconstruir la historia completa de cualquier lote desde una sola vista.'],
               ['¿Puedo comparar información histórica?', 'Sí. La información estructurada permite comparar períodos, variedades y productores.'],
-              ['¿QualityNX reemplaza Excel?', 'QualityNX transforma registros dispersos en información estructurada y consultable, eliminando la dependencia de múltiples archivos.'],
-              ['¿La plataforma funciona con conectividad limitada?', 'Estamos trabajando en funcionalidad offline para operaciones en terreno.'],
+              ['¿QualityNX reemplaza Excel?', 'QualityNX permite centralizar y estructurar información que actualmente puede estar distribuida entre Excel, formularios, fotografías y otros archivos.'],
+              ['¿La plataforma funciona con conectividad limitada?', 'QualityNX está diseñado para operación en terreno y estamos desarrollando su funcionalidad offline para registrar inspecciones cuando la conectividad sea limitada.'],
               ['¿La IA puede consultar el historial de mi empresa?', 'Sí. La IA trabaja sobre la información estructurada de tu empresa para responder consultas específicas.'],
               ['¿Puedo adaptar los controles de calidad a mi operación?', 'Sí. QualityNX se adapta a los controles y estándares de cada operación.'],
             ].map(([q, a]) => (
@@ -443,6 +458,7 @@ export default function LandingPage() {
           <h2 className="mb-4 text-center text-3xl font-bold tracking-tight text-[#1a1a1a] md:text-4xl">Solicita una demostración.</h2>
           <p className="mb-10 text-center text-base text-[#666]">Te mostramos QualityNX aplicado a tu operación.</p>
           <LeadForm />
+          <p className="mt-6 text-center text-sm text-[#888]">Te contactaremos para conocer brevemente tu operación y coordinar una demostración.</p>
         </div>
       </section>
 
