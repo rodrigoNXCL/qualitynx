@@ -275,3 +275,8 @@ Debe mantenerse breve, actualizado y operativo.
 FIN — BUILD_STATUS.md
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━Actualización BUILD_STATUS.md: trabajo en Foundation / Landing / Login (D-002, D-003, D-004 registradas).
 2026-09-17: Foundation SQL ejecutado con éxito (Success). Tables users, companies, audit_logs + triggers + RLS creadas. Regla de no-destrucción cumplida. Actualizando estado...
+ACTUALIZACIÓN RÁPIDA — BUILD_STATUS.md y DECISIONS.md
+FECHA: 2026-09-21 | ETAPA: 01 FOUNDATION | ESTADO: COMPLETADA (landing activa en quality.nxchile.com, build verificado, login existente)
+DESPLIEGUE: Cloudflare Workers (qualitynx) — dominio quality.nxchile.com operativo
+BLOQUEO RESUELTO: build error de ts-loader/Turbopack corregido; paquetes database/shared reconstruidos; dashboard/api resguardados en src/app-legacy/
+DESPLIEGUE FINAL COMPLETADO 2026-09-21: qualitynx (Worker) activo. Landing /login en quality.nxchile.com 200 OK. NEXT_PUBLIC_SUPABASE_URL y ANON_KEY configurados en vars. Build OpenNext exitoso. No hay bloqueos.

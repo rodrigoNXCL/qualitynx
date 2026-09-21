@@ -39,3 +39,4 @@ Cada decisión debe contener:
 - **Decisión:** La versión 1 operativa debe estar funcionando el **25/09/2026**.
 - **Motivo:** Restricción del proyecto definida por usuario y registrada en `.env.local`.
 - **Impacto:** Priorizar Foundation + autenticación + landing mínima; no agregar etapas posteriores (Master Data, Lots) hasta que Foundation cierre.
+DECISIÓN D-005: Despliegue Cloudflare Worker (qualitynx) para landing + login. Método: OpenNext + wrangler deploy. Dominio quality.nxchile.com activo. No se inventaron entidades ni relaciones fuera de CURRENT.md.
