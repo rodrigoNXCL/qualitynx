@@ -6,6 +6,8 @@ CREATE TABLE IF NOT EXISTS leads (
   whatsapp VARCHAR(30) NOT NULL,
   fruit_type VARCHAR(120) NOT NULL DEFAULT '',
   company_type VARCHAR(50) NOT NULL DEFAULT '',
+  recording_method VARCHAR(80) NOT NULL DEFAULT '',
+  inspection_volume VARCHAR(50) NOT NULL DEFAULT '',
   problem TEXT NOT NULL,
   status VARCHAR(20) NOT NULL DEFAULT 'new',
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -22,10 +24,9 @@ CREATE TRIGGER update_leads_updated_at
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 
-CREATE POLICY "leads_public_insert"
+CREATE POLICY "leads_insert_any"
   ON leads
   FOR INSERT
-  TO anon
   WITH CHECK (true);
 
 CREATE POLICY "leads_super_admin_select"

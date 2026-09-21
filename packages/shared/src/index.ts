@@ -106,6 +106,8 @@ export interface Lead {
   whatsapp: string;
   fruit_type: string | null;
   company_type: LeadCompanyType;
+  recording_method: string | null;
+  inspection_volume: string | null;
   problem: string;
   status: LeadStatus;
   created_at: string;
@@ -115,4 +117,6 @@ export interface Lead {
 export type LeadCreate = Omit<Lead, 'id' | 'status' | 'created_at' | 'updated_at'> & {
   role?: string | null;
   fruit_type?: string | null;
+  recording_method?: string | null;
+  inspection_volume?: string | null;
 };

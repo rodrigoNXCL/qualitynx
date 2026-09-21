@@ -150,6 +150,8 @@ export interface Database {
           whatsapp: string;
           fruit_type: string | null;
           company_type: 'Productor' | 'Packing' | 'Exportadora' | 'Otro';
+          recording_method: string | null;
+          inspection_volume: string | null;
           problem: string;
           status: 'new' | 'contacted' | 'qualified' | 'closed';
           created_at: string;
@@ -163,6 +165,8 @@ export interface Database {
           whatsapp: string;
           fruit_type?: string | null;
           company_type: 'Productor' | 'Packing' | 'Exportadora' | 'Otro';
+          recording_method?: string | null;
+          inspection_volume?: string | null;
           problem: string;
           status?: 'new' | 'contacted' | 'qualified' | 'closed';
           created_at?: string;
@@ -176,6 +180,8 @@ export interface Database {
           whatsapp?: string;
           fruit_type?: string | null;
           company_type?: 'Productor' | 'Packing' | 'Exportadora' | 'Otro';
+          recording_method?: string | null;
+          inspection_volume?: string | null;
           problem?: string;
           status?: 'new' | 'contacted' | 'qualified' | 'closed';
           created_at?: string;
