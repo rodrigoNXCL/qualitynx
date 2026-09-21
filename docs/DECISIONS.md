@@ -72,3 +72,19 @@ Cada decisión debe contener:
 - **Decisión:** Deploy manual via `opennextjs-cloudflare build && deploy`. No GitHub Actions ni auto-deploy.
 - **Motivo:** Control total del momento de publicación.
 - **Impacto:** Cada cambio requiere push + deploy manual.
+
+---
+
+## D-009: Landing — Ajustes quirúrgicos finales
+- **Fecha:** 2026-09-21
+- **Decisión:** Ajustes puntuales sin rehacer landing: OFFLINE como sección estratégica, "Próximas implementaciones" en vez de "En desarrollo", 6to diferenciador offline, FAQ actualizada.
+- **Motivo:** Llevar landing a nivel comercial 9/10. Offline es parte estratégica del producto pero no está operativo — se comunica como "próximamente" sin ocultarlo.
+- **Impacto:** Sección nueva "Operación en terreno", diferenciador #6, copy post-form, FAQ con respuestas más precisas.
+
+---
+
+## D-010: Offline — Estrategia de comunicación
+- **Fecha:** 2026-09-21
+- **Decisión:** Offline se comunica como capacidad estratégica en desarrollo, no como funcionalidad operativa.
+- **Motivo:** La funcionalidad offline es parte del roadmap pero no está lista. No afirmar que funciona sino que está en desarrollo.
+- **Impacto:** Sección dedicada en landing, 6to diferenciador, respuesta en FAQ. Cuando esté operativo, actualizar copy a "funciona offline".

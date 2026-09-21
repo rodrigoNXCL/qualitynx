@@ -66,17 +66,19 @@ INFRAESTRUCTURA:
 
 LANDING:
 - Hero con posicionamiento "Toda la historia de calidad de cada lote. En un solo lugar."
-- Ficha de lote (mockup)
+- Ficha de lote en QualityNX (mockup)
 - Problema / Antes-Después
 - Cómo funciona (flujo 6 pasos)
 - Qué queda registrado (4 bloques)
 - No es solo un formulario
 - Beneficios (5)
-- IA aplicada
-- Diferenciación
+- Operación en terreno / Offline (sección estratégica)
+- IA aplicada (complemento)
+- Diferenciación (6 conceptos incluyendo offline)
 - Para quién (productores, packings, exportadoras, calidad)
-- FAQ (10 preguntas)
-- Formulario de demostración
+- Próximas implementaciones (social proof mejorado)
+- FAQ (10 preguntas actualizadas)
+- Formulario de demostración con texto post-form
 - CTA WhatsApp
 - Footer con contacto
 - Logo horizontal QualityNX
@@ -151,6 +153,9 @@ SQL Foundation ejecutado (users, companies, audit_logs). Landing activa en quali
 
 2026-09-21 | Landing reconstruida (spec 34)
 Landing completa: hero, ficha lote, problema, beneficios, IA, FAQ, formulario. Formulario de leads funcional con insert en Supabase. Key anon actualizada. .open-next excluido de git.
+
+2026-09-21 | Landing ajustes quirúrgicos finales
+Sección Offline operación en terreno. "Próximas implementaciones". 6to diferenciador offline. FAQ actualizada. Texto post-form.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 10. PRINCIPIO FINAL
