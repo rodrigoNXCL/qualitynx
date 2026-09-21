@@ -1,6 +1,8 @@
 // Placeholder types for Supabase Database
 // These will be replaced by `supabase gen types typescript` when Supabase is configured
 // Do not edit manually - this file is generated
+// NOTA: Relationships incluidas de forma manual para que supabase-js resuelva
+// las consultas tipadas. Regenerar con `npm run db:generate` cuando sea posible.
 
 export interface Database {
   public: {
@@ -33,6 +35,7 @@ export interface Database {
           updated_at?: string;
           created_by?: string;
         };
+        Relationships: [];
       };
       users: {
         Row: {
@@ -71,6 +74,15 @@ export interface Database {
           updated_at?: string;
           last_login_at?: string | null;
         };
+        Relationships: [
+          {
+            foreignKeyName: "users_company_id_fkey";
+            column: "company_id";
+            isOneToOne: false;
+            referencedRelation: "companies";
+            referencedSchema: "public";
+          },
+        ];
       };
       audit_logs: {
         Row: {
@@ -115,6 +127,22 @@ export interface Database {
           user_agent?: string | null;
           created_at?: string;
         };
+        Relationships: [
+          {
+            foreignKeyName: "audit_logs_user_id_fkey";
+            column: "user_id";
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedSchema: "public";
+          },
+          {
+            foreignKeyName: "audit_logs_company_id_fkey";
+            column: "company_id";
+            isOneToOne: false;
+            referencedRelation: "companies";
+            referencedSchema: "public";
+          },
+        ];
       };
     };
     Views: Record<string, never>;

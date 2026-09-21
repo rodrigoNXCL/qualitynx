@@ -43,7 +43,17 @@ SIGUIENTE ETAPA:
 
 BLOQUEOS:
 
-NINGUNO REGISTRADO
+BLOQUEO:
+Error build al intentar acceder /login en localhost:3000
+
+CAUSA:
+Turbopack (Next.js 16.3.0) intenta procesar `packages/database/src/index.ts` con `ts-loader` (loader webpack no instalado). La regla fue removida de next.config.ts pero persisten chunks compilados y error de evaluación Node.js.
+
+IMPACTO:
+Login (/login) devuelve 500 / Build Error. Landing (/) funciona correctamente.
+
+ACCIÓN:
+Limpiar `.next` completamente, verificar que `next.config.ts` tenga `turbopack: {}` vacío (sin reglas `ts-loader`). Revisar si `packages/database/src/index.ts` necesita ser stub o mock ligero compatible con Turbopack en lugar de procesarse como módulo TypeScript con webpack loaders.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 3. ESTADO GLOBAL
