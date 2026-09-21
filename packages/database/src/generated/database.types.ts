@@ -1,8 +1,5 @@
 // Placeholder types for Supabase Database
-// These will be replaced by `supabase gen types typescript` when Supabase is configured
-// Do not edit manually - this file is generated
-// NOTA: Relationships incluidas de forma manual para que supabase-js resuelva
-// las consultas tipadas. Regenerar con `npm run db:generate` cuando sea posible.
+// NOTA: Regenerar con `npm run db:generate` cuando Supabase CLI esté disponible.
 
 export interface Database {
   public: {
@@ -143,6 +140,48 @@ export interface Database {
             referencedSchema: "public";
           },
         ];
+      };
+      leads: {
+        Row: {
+          id: string;
+          name: string;
+          company: string;
+          role: string | null;
+          whatsapp: string;
+          fruit_type: string | null;
+          company_type: 'Productor' | 'Packing' | 'Exportadora' | 'Otro';
+          problem: string;
+          status: 'new' | 'contacted' | 'qualified' | 'closed';
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          company: string;
+          role?: string | null;
+          whatsapp: string;
+          fruit_type?: string | null;
+          company_type: 'Productor' | 'Packing' | 'Exportadora' | 'Otro';
+          problem: string;
+          status?: 'new' | 'contacted' | 'qualified' | 'closed';
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          company?: string;
+          role?: string | null;
+          whatsapp?: string;
+          fruit_type?: string | null;
+          company_type?: 'Productor' | 'Packing' | 'Exportadora' | 'Otro';
+          problem?: string;
+          status?: 'new' | 'contacted' | 'qualified' | 'closed';
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
       };
     };
     Views: Record<string, never>;

@@ -129,5 +129,5 @@ export async function isSuperAdmin(userId: string): Promise<boolean> {
     .eq('auth_id', userId)
     .maybeSingle();
 
-  return data?.role === 'SUPER_ADMIN';
+  return (data as any)?.role === 'SUPER_ADMIN';
 }

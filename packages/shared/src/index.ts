@@ -82,3 +82,37 @@ export interface AuditLog {
   user_agent: string | null;
   created_at: string;
 }
+
+// ============================================
+// TABLA: leads
+// ============================================
+
+export const LeadStatus = {
+  NEW: 'new',
+  CONTACTED: 'contacted',
+  QUALIFIED: 'qualified',
+  CLOSED: 'closed',
+} as const;
+
+export type LeadStatus = (typeof LeadStatus)[keyof typeof LeadStatus];
+
+export type LeadCompanyType = 'Productor' | 'Packing' | 'Exportadora' | 'Otro';
+
+export interface Lead {
+  id: string;
+  name: string;
+  company: string;
+  role: string | null;
+  whatsapp: string;
+  fruit_type: string | null;
+  company_type: LeadCompanyType;
+  problem: string;
+  status: LeadStatus;
+  created_at: string;
+  updated_at: string;
+}
+
+export type LeadCreate = Omit<Lead, 'id' | 'status' | 'created_at' | 'updated_at'> & {
+  role?: string | null;
+  fruit_type?: string | null;
+};
