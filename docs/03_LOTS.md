@@ -4,7 +4,7 @@
 
 Versión: 1.0
 Etapa: 03 — LOTS
-Estado: DEFINICIÓN PARA CONSTRUCCIÓN
+Estado: COMPLETADA
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -292,37 +292,67 @@ Intentar acceder a un lote fuera del ámbito autorizado.
 
 03 — LOTS está COMPLETADA cuando:
 
-[ ] El modelo LOTE está operativo.
+[x] El modelo LOTE está operativo.
 
-[ ] La identidad del lote funciona según CURRENT.md.
+[x] La identidad del lote funciona según CURRENT.md.
 
-[ ] Las referencias a MASTER DATA funcionan.
+[x] Las referencias a MASTER DATA funcionan.
 
-[ ] La creación funciona.
+[x] La creación funciona.
 
-[ ] La consulta funciona.
+[x] La consulta funciona.
 
-[ ] La modificación funciona.
+[x] La modificación funciona.
 
-[ ] La validación de duplicados funciona.
+[x] La validación de duplicados funciona.
 
-[ ] Los estados definidos para esta etapa funcionan.
+[x] Los estados definidos para esta etapa funcionan.
 
-[ ] El cierre funciona.
+[x] El cierre funciona.
 
-[ ] La trazabilidad de operaciones propias de LOTS funciona.
+[x] La trazabilidad de operaciones propias de LOTS funciona.
 
-[ ] Las pruebas de aceptación están aprobadas.
+[x] Las pruebas de aceptación están aprobadas.
 
-[ ] No existen errores críticos pendientes.
+[x] No existen errores críticos pendientes.
 
-[ ] No se han construido funcionalidades de etapas posteriores.
+[x] No se han construido funcionalidades de etapas posteriores.
 
-[ ] BUILD_STATUS.md fue actualizado.
+[x] BUILD_STATUS.md fue actualizado.
 
-[ ] 03 — LOTS queda marcado como COMPLETADA.
+[x] 03 — LOTS queda marcado como COMPLETADA.
 
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━9. IDENTIDAD AMPLIADA DE LOTE (D-029)
+   - `lot_type`: ORIGEN (origen/puro) | PROCESO | REPALLETIZAJE.
+   - `folio_interno`: folio interno/planta (ej PL-45872), separado del
+     folio QualityNX YYYY-NNNNNN; ambos se muestran y buscan.
+   - `kg_declarados`: kg según guía/declaración; no pisa
+     `theoretical_weight_kg` calculado. Cantidad documental por lote.
+   - Genealogía `lot_genealogy` (append-only, RLS): lote derivado
+     (folio nuevo) ↔ lotes fuente; historia de la fuente intacta.
+   - Guía multilote: N lotes independientes comparten
+     `producer_guide_number`; buscar por guía devuelve todos; sin
+     catálogo paralelo de guías.
+   - Migración: `20260924000004_lot_type_genealogy.sql` (aplicada en
+     Supabase, 2026-09-24).
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+10. RENDIMIENTO Y UX DEL FORMULARIO (D-030)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   - Genealogía **bajo demanda**: la lista de lotes no consulta
+     `lot_genealogy`; se consulta solo al editar o guardar un lote
+     PROCESO/REPALLETIZAJE (filtrada por lote derivado).
+   - Selector de lotes fuente **bajo demanda**: búsqueda por entrada;
+     no lista todos los lotes al abrir el formulario.
+   - La pantalla no espera genealogía, historia ni datos secundarios
+     para mostrar la lista ni para abrir **NUEVO LOTE**.
+   - Campo **Especie** visible en el formulario (derivado de la
+     variedad seleccionada).
+   - "Ocultar/Cancelar" cierra el formulario; el mensaje de éxito se
+     muestra al guardar (folio QualityNX lo genera el sistema).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 FIN — 03_LOTS.md
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

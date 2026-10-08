@@ -2,10 +2,11 @@
 
 # NX QUALITY
 
-Versión: CURRENT-INITIAL-1.0
-Estado: BASE FUNCIONAL PARA DESARROLLO
+Versión: CURRENT-1.1
+Estado: FUENTE DE VERDAD VIGENTE EN CONSTRUCCIÓN POR ETAPAS
 Naturaleza: Documento funcional y conceptual
 Fecha: 2026-08-10
+Última actualización de estado: 2026-09-24
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 1. IDENTIDAD DEL PROYECTO
@@ -68,15 +69,121 @@ Principio central:
 
 Estado:
 
-Diseño funcional inicial terminado.
+Este CURRENT constituye la fuente principal de verdad funcional.
 
-El sistema se encuentra en etapa de definición previa al desarrollo.
+La construcción avanza por etapas según BUILD_ORDER.md; el estado real
+de cada etapa vive en BUILD_STATUS.md.
 
-Este CURRENT constituye la fuente principal de verdad funcional para iniciar
-la construcción del MVP.
+Al 2026-09-23: etapas 01–07 completadas y verificadas; corrección de
+flujo de inspección (continuidad + muestreo con muestras + informe)
+cerrada; etapas 08–11 en roadmap (no construidas).
 
-No se requiere una nueva ronda de definición para comenzar la arquitectura
-y desarrollo inicial.
+Al 2026-09-24: rondas de corrección cerradas — unidad física de muestreo
+(N en unidades/envases, no kg), consolidado automático (N=1 copia exacta;
+N>1 sin valor consolidado; agregación PENDIENTE DE ESPECIFICACIÓN) y
+menú INFORMES `/dashboard/reports` (D-026); clasificación comercial +
+semáforo QualityNX append-only con informes de lote y de calidad de
+embarque (D-027; semáforo no es SAG; IA no decide color); cierre del
+flujo completo con buscador de lote en Inspecciones, análisis histórico
+IA de lote e informe de embarque con contexto completo (D-028); cierre
+único D-029 con tipo de lote (origen/proceso/repalletizaje + genealogía),
+folio interno, kg declarados, guía multilote, flujo de informes
+buscar→seleccionar→elegir, identidad completa en informes y PDF solo del
+documento (migración `20260924000004_lot_type_genealogy.sql`, aplicada).
+Posteriormente, corrección de rendimiento pre-E2E (D-030): consultas sin
+duplicar, carga progresiva en dos olas, genealogía y selector de lotes
+fuente bajo demanda, sin N+1; ajustes UX (campo Especie visible, cancelar
+cierra el formulario, mensaje de éxito visible). Validación runtime 21/21
+→ estado **READY FOR E2E** (prueba general A–AM con datos reales).
+Ver BUILD_STATUS.md.
+
+Estado D-031 (2026-10-04): la genealogía admite cantidad y unidad por
+relación (`lot_genealogy.quantity`, `lot_genealogy.unit`; migración
+`20260926000001_genealogy_quantities.sql`, aplicada). Al registrar un lote
+de proceso o repalletizaje se captura cantidad y unidad por cada lote
+fuente. Si se informa cantidad, la unidad es obligatoria y la cantidad debe
+ser mayor que cero; omitir la cantidad deja la relación sin cantidad
+registrada. El informe histórico de lote muestra la cantidad y unidad de
+orígenes y destinos, y `No registrada` cuando la cantidad es `NULL`. Las
+cantidades de origen son por lote fuente y no se suman ni se convierten
+contra la cantidad declarada del lote derivado: son magnitudes distintas.
+Validación funcional ejecutada sobre la app y Supabase: 8 de 9 puntos PASS
+y 1 FAIL corregido (cantidad cero no rechazada). Ver BUILD_STATUS.md.
+
+Estado QualityNX V2 (2026-10-04): la instrucción maestra de V2 tiene como
+referencia funcional obligatoria los dashboards de QCInspec. El levantamiento
+verificable de los 5 dashboards y la matriz de equivalencia están en
+`docs/QCINSPEC_LEVANTAMIENTO_V2.md` y `docs/MATRIZ_EQUIVALENCIA_V2.md`. La
+V2 no altera reglas de negocio: por definición los indicadores se calculan
+desde datos persistidos y reglas identificables, la evaluación sigue siendo
+de Quality Engine, la clasificación no equivale a decisión formal y la
+decisión permanece humana. Reglas vigentes que la V2 no puede romper:
+el semáforo QualityNX no es una carta A/B/C equivalente; la agregación de N
+mayor que 1 muestra sigue PENDIENTE DE ESPECIFICACIÓN; un indicador sin
+universo, base y regla identificables no se publica.
+
+Estado V2 Fase B (2026-10-04): representational numérica segura e indicadores
+descriptivos implementados en `/dashboard/indicadores`. Reglas fijadas:
+valor original siempre intacto; solo se acepta el formato canónico
+`^[+-]?(\d+(\.\d+)?|\.\d+)$`; los formatos ambiguos con separadores o espacios
+(`1.234,56`, `12,5`, `1 234`) NO se interpretan y se cuentan como excluidos;
+los valores con letras (`12 g`) NO se convierten. Fecha de agrupación:
+`inspections.inspected_at` en UTC. Semana: ISO-8601 (lunes inicio, semana 1
+contiene el primer jueves) usando año ISO, para no duplicar ni perder semanas
+en el cambio de año. Fórmula: promedio = Σ valores numéricos evaluables /
+nº de mediciones evaluables del bucket; cada medición es una observación y
+no se consolida por inspección. Las unidades no se convierten nunca: una
+unidad ausente o distinta a la esperada excluye el registro y se cuenta.
+La temperatura exige selección explícita de etapa operacional porque existe
+en contextos distintos y no se mezcla. Estos indicadores son descriptivos:
+no evalúan cumplimiento, no aplican límites, no asignan semáforo ni decisión,
+y no representan condición de despacho, pallet o embarque (esas dimensiones
+no existen en el modelo). Ver BUILD_STATUS.md.
+
+Estado V2 Fase C (2026-10-04): las cinco decisiones de negocio que bloqueaban
+la V2 están analizadas y documentadas en `docs/DECISIONES_NEGOCIO_V2.md` con
+evidencia, alternativas y estado. Conclusión vigente: **no existe equivalencia
+aprobable entre la carta A/B/C de QCInspec y las clasificaciones de QualityNX**;
+**el sistema no puede afirmar cumplimiento** porque el 100 % de los criterios
+está en `PENDIENTE DE VALIDACIÓN` sin fuente informada; la agregación N>1 no se
+puede definir y el único caso existente demuestra que el consolidado **no** es
+el promedio; la base de peso utilizable es el teórico y está etiquetada como
+estimación; y las dimensiones logísticas no existen. Los indicadores
+descriptivos siguen siendo válidos porque nunca afirmaron cumplimiento.
+
+Estado V2 corrección de experiencia (2026-10-04): la gerencia entra por
+**Resumen** (`/dashboard`), que informa cobertura de datos, etapas con
+inspecciones, lotes con etapa vigente, criterios con más desviaciones y
+productores con más datos; el detalle está en **Análisis**
+(`/dashboard/analisis`) con cuatro pestañas: por etapa, por productor,
+problemas recurrentes y valores observados. Los indicadores de Brix y
+temperatura siguen disponibles como **pestaña secundaria**, no como destino
+principal. La navegación se reorganizó en cinco grupos funcionales (Resumen,
+Operación, Análisis, Informes, Configuración) y se eliminó el KPI duplicado y
+el indicador sin denominador. Reglas que la experiencia respeta y que no pueden
+romperse: una desviación es una diferencia frente al criterio **configurado**,
+no un incumplimiento normativo; toda tasa se publica con su base y con el conteo
+de registros sin determinación; no se publican rankings de calidad sin regla,
+universo y volumen de datos; por debajo de un volumen mínimo se muestra «datos
+insuficientes» en vez de un porcentaje. Auditoría y detalle en
+`docs/AUDIT_PRODUCTO_V2.md`.
+
+Estado D-032 (2026-10-05): una transformación de planta puede tener **varios
+lotes fuente y varias salidas**, y el **remanente es siempre un lote nuevo** con
+folio propio. Merma y descarte son salidas explícitas con motivo y no producen
+lote. No existe conversión automática de unidades: una operación trabaja en una
+sola unidad. No se consume más de lo disponible, y esa validación es de base de
+datos, no solo de interfaz: la confirmación es atómica y o deja todo registrado o
+no deja nada. Las **existencias** se derivan de un libro de movimientos y no del
+estado del lote: un lote CREADO puede estar agotado y uno APROBADO puede tener
+saldo. Los lotes agotados salen de existencias y permanecen en historial. Sin
+cantidad y unidad declaradas, un lote se muestra pero no suma: no se infiere
+unidad ni se convierte entre unidades. Una transformación confirmada es
+append-only; corregirla exige anularla con motivo. Este control de cantidades es
+una regla **operacional** del sistema y no requiere inventar normas de calidad.
+La etapa de los lotes históricos **no se rellena por inferencia**: se verificó
+que no existe fuente confiable para 334 de 357 lotes. Ver `docs/DECISIONS.md`
+D-032.
 
 Los detalles adicionales que aparezcan posteriormente deberán incorporarse
 como evolución controlada del producto y no deberán alterar silenciosamente
@@ -512,6 +619,29 @@ un mínimo de 3 muestras.
 
 QualityNX NO debe convertir estos valores en reglas universales.
 
+13.1 REGLA OPERACIONAL INICIAL QUALITYNX
+
+Para la prueba inicial de arándano fresco en Chile se configura una regla
+operacional QualityNX de 10 muestras por cada 1.000 kg teóricos:
+
+N sugerido = CEIL(kg teóricos / 1.000 × 10)
+
+Unidad de N (2026-09-24): N se expresa en **unidades de muestreo**
+(envases u otra `sampling_unit` del plan), **no en kg**. El N sugerido es
+solo recomendación; no bloquea el cierre. Peso total referencial =
+N × peso por unidad cuando el plan lo define.
+
+Consolidado automático al completar (2026-09-24): sin acción manual del
+inspector; N real = 1 → copia exacta de esa muestra; N real > 1 → no se
+genera valor consolidado (agregación por tipo de criterio PENDIENTE DE
+ESPECIFICACIÓN; prohibido primer valor no vacío, promedios u otras
+fórmulas inventadas). Validación de cierre solo contra N real.
+
+Esta regla identifica explícitamente su origen operacional, no SAG, y no
+constituye una norma, tolerancia o requisito universal. El plan queda
+configurable por empresa y punto; N realizado puede modificarse solamente
+con motivo registrado.
+
 Debe registrar el método que determina:
 
 - cantidad de muestra;
@@ -540,6 +670,12 @@ El criterio debe poder identificar:
 - destino;
 - etapa;
 - alcance.
+
+Cada criterio debe mantener una definición técnica que indique qué mide,
+qué observa el inspector, cómo se registra, unidad, escala, método,
+instrumento, validaciones y ayuda contextual. Si la fuente no define un
+límite, unidad, escala o método, el estado debe ser
+`CONFIGURABLE POR PROTOCOLO/CLIENTE`; no se completa con valores inventados.
 
 Fuentes iniciales contempladas:
 

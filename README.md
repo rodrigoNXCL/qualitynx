@@ -122,9 +122,9 @@ Ver carpeta `docs/`:
 
 ## Estado Actual
 
-**Etapa Activa**: 01 — FOUNDATION (EN DESARROLLO)
+**Etapa Activa**: 02 — MASTER DATA (EN VERIFICACIÓN)
 
-Ver `BUILD_STATUS.md` para checklist completo de Definition of Done.
+Ver `docs/BUILD_STATUS.md` para checklist completo de Definition of Done.
 
 ## Licencia
 

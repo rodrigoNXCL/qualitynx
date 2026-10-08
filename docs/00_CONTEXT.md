@@ -444,8 +444,24 @@ NX QUALITY
 
 Estado:
 
-CONSTRUCCIÓN DOCUMENTAL / PREPARACIÓN DE DESARROLLO
+CONSTRUCCIÓN POR ETAPAS EN CURSO.
 
+Etapas 01–07 completadas y verificadas (ver BUILD_STATUS.md).
+Corrección de flujo de inspección (continuidad + muestreo + informe) cerrada.
+Rondas 2026-09-24 cerradas: unidad física de muestreo (N en unidades, no kg),
+consolidado automático (N=1 copia / N>1 sin valor), menú INFORMES
+(`dashboard/reports`, D-026), clasificación comercial + semáforo QualityNX
+append-only e informes de lote/embarque (D-027), cierre de flujo con
+buscador de lote en Inspecciones, análisis histórico IA e informe de
+embarque con contexto completo (D-028); cierre único D-029: tipo de lote
+(origen/proceso/repalletizaje con genealogía `lot_genealogy`), folio
+interno, kg declarados, guía multilote, hub de informes
+buscar→seleccionar→elegir y PDF solo del documento (migración
+`20260924000004` aplicada). Corrección de rendimiento pre-E2E (D-030)
+cerrada con validación runtime 21/21: consultas sin duplicar, carga
+progresiva, genealogía bajo demanda → estado **READY FOR E2E**
+(prueba A–AM con datos reales).
+Siguiente etapa según orden oficial: 08 — TRANSFORMATIONS (solo si se ordena inicio).
 
 La documentación funcional principal se encuentra definida en
 CURRENT.md.

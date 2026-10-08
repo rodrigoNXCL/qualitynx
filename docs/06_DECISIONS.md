@@ -4,7 +4,7 @@
 
 Versión: 1.0
 Etapa: 06 — DECISIONS
-Estado: DEFINICIÓN PARA CONSTRUCCIÓN
+Estado: COMPLETADA
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -573,48 +573,50 @@ Usuario intenta decidir sobre lote de otra empresa.
 
 06 — DECISIONS está COMPLETADA cuando:
 
-[ ] FOUNDATION está COMPLETADA.
+[x] FOUNDATION está COMPLETADA.
 
-[ ] LOTS está COMPLETADA.
+[x] LOTS está COMPLETADA.
 
-[ ] INSPECTIONS está COMPLETADA.
+[x] INSPECTIONS está COMPLETADA.
 
-[ ] QUALITY ENGINE está COMPLETADA.
+[x] QUALITY ENGINE está COMPLETADA.
 
-[ ] Existe el modelo de DECISIÓN.
+[x] Existe el modelo de DECISIÓN.
 
-[ ] Se pueden registrar decisiones.
+[x] Se pueden registrar decisiones.
 
-[ ] Funcionan los permisos.
+[x] Funcionan los permisos.
 
-[ ] Funciona el fundamento.
+[x] Funciona el fundamento.
 
-[ ] Funciona la asociación con lote.
+[x] Funciona la asociación con lote.
 
-[ ] Funciona la asociación con antecedentes de inspección/calidad.
+[x] Funciona la asociación con antecedentes de inspección/calidad.
 
-[ ] Funcionan las validaciones.
+[x] Funcionan las validaciones.
 
-[ ] Funcionan las transiciones de estado correspondientes.
+[x] Funcionan las transiciones de estado correspondientes
+    (append-only REGISTRADA → ANULADA; mapa de efectos vacío por
+    PENDIENTE DE DECISIÓN, D-024 — no inventado).
 
-[ ] Las decisiones quedan auditadas.
+[x] Las decisiones quedan auditadas.
 
-[ ] Las anulaciones conservan historial.
+[x] Las anulaciones conservan historial.
 
-[ ] Las decisiones anteriores no se sobrescriben silenciosamente.
+[x] Las decisiones anteriores no se sobrescriben silenciosamente.
 
-[ ] QUALITY ENGINE no toma decisiones automáticamente.
+[x] QUALITY ENGINE no toma decisiones automáticamente.
 
-[ ] Las pruebas de aceptación están aprobadas.
+[x] Las pruebas de aceptación están aprobadas (E2E 12/12 PASS).
 
-[ ] No existen errores críticos pendientes.
+[x] No existen errores críticos pendientes.
 
-[ ] No se han construido funcionalidades pertenecientes a
-    TRACEABILITY, TRANSFORMATIONS, OFFLINE u ANALYTICS.
+[x] No se han construido funcionalidades pertenecientes a
+    TRACEABILITY, TRANSFORMATIONS, OFFLINE ni ANALYTICS.
 
-[ ] BUILD_STATUS.md fue actualizado.
+[x] BUILD_STATUS.md fue actualizado.
 
-[ ] 06 — DECISIONS queda marcado como COMPLETADA.
+[x] 06 — DECISIONS queda marcado como COMPLETADA.
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

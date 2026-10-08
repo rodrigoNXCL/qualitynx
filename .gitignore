@@ -13,3 +13,9 @@ build
 # Build artifacts
 .open-next
 paso
+
+# Artefactos E2E locales (no producción)
+.tmp_e2e*
+scripts/e2e_*.py
+
+.backups/

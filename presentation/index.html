@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NX Quality — Presentación Ejecutiva</title>
+<link rel="icon" href="assets/favicon.ico" />
+<style>
+:root{
+  --paper:#F7F7F3;
+  --ink:#0F110E;
+  --ink-2:#1A1D17;
+  --olive:#4A5D23;
+  --olive-lt:#7A8F4A;
+  --muted:#6B6E66;
+  --line:rgba(15,17,14,.12);
+  --line-d:rgba(247,247,243,.14);
+  --cream:#F7F7F3;
+  --white:#fff;
+  --dim:rgba(15,17,14,.55);
+  --dim-d:rgba(247,247,243,.55);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0A0B09;color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+img{max-width:100%;display:block}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;background:var(--paper)}
+.slide{
+  position:absolute;inset:0;display:none;flex-direction:column;
+  padding:clamp(36px,5vh,72px) clamp(40px,5.5vw,96px) clamp(56px,7vh,88px);
+  background:var(--paper);color:var(--ink);
+  opacity:0;transform:translateY(8px);
+  transition:opacity .4s ease,transform .4s ease;
+}
+.slide.active{display:flex;opacity:1;transform:none}
+.slide.dark{background:var(--ink);color:var(--cream)}
+.slide.dark-2{background:#141612;color:var(--cream)}
+.slide.olive{background:#1C2414;color:var(--cream)}
+
+/* chrome — minimal editorial */
+.meta{
+  display:flex;align-items:baseline;justify-content:space-between;gap:24px;
+  flex-shrink:0;margin-bottom:clamp(20px,3.5vh,40px);
+}
+.meta .num{
+  font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--olive);
+}
+.dark .meta .num,.dark-2 .meta .num,.olive .meta .num{color:#9BB06A}
+.meta .sec{
+  font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);
+}
+.dark .meta .sec,.dark-2 .meta .sec,.olive .meta .sec{color:rgba(247,247,243,.45)}
+.meta .rule{flex:1;height:1px;background:var(--line);margin:0 8px;min-width:40px}
+.dark .meta .rule,.dark-2 .meta .rule,.olive .meta .rule{background:var(--line-d)}
+
+/* type */
+h1.hero{
+  font-size:clamp(52px,7.4vw,110px);line-height:.94;letter-spacing:-.035em;font-weight:750;
+}
+h1.hero .accent{color:var(--olive-lt)}
+.olive h1.hero .accent,.dark h1.hero .accent,.dark-2 h1.hero .accent{color:#B7C98A}
+h2.title{
+  font-size:clamp(36px,4.6vw,64px);letter-spacing:-.03em;line-height:1.02;font-weight:750;
+}
+h2.title em{font-style:normal;color:var(--olive)}
+.dark h2.title em,.dark-2 h2.title em,.olive h2.title em{color:#B7C98A}
+.lede{
+  font-size:clamp(16px,1.55vw,21px);color:var(--muted);max-width:44ch;line-height:1.55;
+  margin-top:16px;
+}
+.dark .lede,.dark-2 .lede,.olive .lede{color:rgba(247,247,243,.62)}
+.kicker{
+  font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--olive);margin-bottom:14px;
+}
+.dark .kicker,.dark-2 .kicker,.olive .kicker{color:#9BB06A}
+.tagline{
+  font-size:clamp(15px,1.4vw,18px);color:var(--muted);margin-top:18px;max-width:40ch;line-height:1.5;
+}
+.dark .tagline,.dark-2 .tagline,.olive .tagline{color:rgba(247,247,243,.55)}
+
+.body{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;gap:clamp(16px,2.5vh,28px)}
+
+/* layouts */
+.split{display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(28px,4vw,64px);min-height:0;flex:1;align-items:stretch}
+.split > *{min-height:0;min-width:0}
+.split.ratio-wide{grid-template-columns:.9fr 1.3fr}
+.split.ratio-copy{grid-template-columns:1.25fr .95fr}
+.stack{display:flex;flex-direction:column;gap:14px;min-height:0}
+.row{display:flex;flex-direction:column;gap:10px}
+.center{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0}
+.pad-b{padding-bottom:8px}
+
+/* screenshot — dominant, editorial */
+.frame{
+  position:relative;background:var(--white);border:1px solid var(--line);
+  overflow:hidden;min-height:0;max-height:100%;height:100%;flex:1;
+  box-shadow:0 24px 64px rgba(15,17,14,.10);
+}
+.dark .frame,.dark-2 .frame,.olive .frame{
+  background:#0C0E0B;border-color:rgba(247,247,243,.1);
+  box-shadow:0 24px 64px rgba(0,0,0,.45);
+}
+.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center}
+.frame.tall img{object-position:top center}
+.frame .cap{
+  position:absolute;left:0;right:0;bottom:0;
+  padding:10px 14px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  background:linear-gradient(to top,rgba(15,17,14,.78),transparent);color:rgba(255,255,255,.92);
+  z-index:1;
+}
+.frame.dominant{min-height:0}
+
+/* impact statement */
+.statement{
+  font-size:clamp(28px,3.4vw,48px);line-height:1.18;letter-spacing:-.025em;font-weight:700;
+  max-width:22ch;
+}
+.statement .dim{color:var(--muted);font-weight:500}
+.dark .statement .dim,.dark-2 .statement .dim,.olive .statement .dim{color:rgba(247,247,243,.45)}
+.statement .hi{color:var(--olive)}
+.dark .statement .hi,.dark-2 .statement .hi,.olive .statement .hi{color:#B7C98A}
+
+/* vertical chain — lines, not cards */
+.chain-v{display:flex;flex-direction:column;gap:0;min-height:0}
+.chain-v .step{
+  display:grid;grid-template-columns:48px 1fr auto;gap:16px;align-items:center;
+  padding:14px 0;border-bottom:1px solid var(--line);
+}
+.chain-v .step:last-child{border-bottom:0}
+.chain-v .n{
+  font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--olive);
+}
+.chain-v .t{font-size:15px;font-weight:750;letter-spacing:-.01em}
+.chain-v .d{font-size:13px;color:var(--muted);text-align:right;max-width:28ch}
+.dark .chain-v .step,.dark-2 .chain-v .step,.olive .chain-v .step{border-color:var(--line-d)}
+.dark .chain-v .n,.dark-2 .chain-v .n,.olive .chain-v .n{color:#9BB06A}
+.dark .chain-v .d,.dark-2 .chain-v .d,.olive .chain-v .d{color:rgba(247,247,243,.45)}
+
+/* horizontal flow — hairline pipeline */
+.flow-h{
+  display:flex;align-items:center;gap:0;flex-wrap:wrap;
+  padding:4px 0;
+}
+.flow-h .n{
+  font-size:13px;font-weight:750;letter-spacing:.06em;text-transform:uppercase;
+  padding:8px 0;
+}
+.flow-h .arr{
+  color:var(--olive-lt);font-weight:700;padding:0 14px;font-size:15px;opacity:.85;
+}
+.dark .flow-h .arr,.dark-2 .flow-h .arr,.olive .flow-h .arr{color:#9BB06A}
+.dark .flow-h .n,.dark-2 .flow-h .n,.olive .flow-h .n{color:var(--cream)}
+
+/* model hierarchy diagram */
+.hier{display:flex;flex-direction:column;gap:0}
+.hier .lvl{
+  display:grid;grid-template-columns:160px 1fr;gap:24px;align-items:baseline;
+  padding:16px 0;border-bottom:1px solid var(--line);
+}
+.hier .lvl:last-child{border-bottom:0}
+.hier .k{
+  font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--olive);
+}
+.hier .v strong{display:block;font-size:17px;font-weight:750;letter-spacing:-.015em;margin-bottom:4px}
+.hier .v span{font-size:14px;color:var(--muted);line-height:1.45}
+.dark .hier .lvl,.dark-2 .hier .lvl,.olive .hier .lvl{border-color:var(--line-d)}
+.dark .hier .k,.dark-2 .hier .k,.olive .hier .k{color:#9BB06A}
+.dark .hier .v span,.dark-2 .hier .v span,.olive .hier .v span{color:rgba(247,247,243,.5)}
+
+/* truth flow — large type pipeline */
+.truth{
+  display:flex;flex-wrap:wrap;align-items:center;gap:6px 0;
+  font-size:clamp(15px,1.7vw,22px);font-weight:750;letter-spacing:-.01em;
+  line-height:1.3;
+}
+.truth .sep{color:var(--olive-lt);padding:0 12px;font-weight:600}
+.dark .truth .sep,.dark-2 .truth .sep,.olive .truth .sep{color:#9BB06A}
+
+/* concept trio — editorial columns, no cards */
+.concepts{display:grid;grid-template-columns:repeat(3,1fr);gap:0;flex:1;min-height:0}
+.concepts .c{
+  padding:0 clamp(16px,2vw,28px);border-left:1px solid var(--line);
+  display:flex;flex-direction:column;justify-content:center;gap:10px;
+}
+.concepts .c:first-child{border-left:0;padding-left:0}
+.concepts .c .lab{
+  font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--olive);
+}
+.concepts .c .hd{font-size:clamp(20px,2vw,28px);font-weight:750;letter-spacing:-.02em;line-height:1.15}
+.concepts .c .tx{font-size:14px;color:var(--muted);line-height:1.5}
+.dark .concepts .c,.dark-2 .concepts .c,.olive .concepts .c{border-color:var(--line-d)}
+.dark .concepts .c .lab,.dark-2 .concepts .c .lab,.olive .concepts .c .lab{color:#9BB06A}
+.dark .concepts .c .tx,.dark-2 .concepts .c .tx,.olive .concepts .c .tx{color:rgba(247,247,243,.5)}
+
+/* problem spine */
+.spine{display:flex;flex-direction:column;align-items:flex-start;gap:0;flex:1;justify-content:center}
+.spine .node{
+  display:flex;align-items:center;gap:18px;padding:13px 0;
+  font-size:clamp(16px,1.7vw,22px);font-weight:750;letter-spacing:.04em;text-transform:uppercase;
+}
+.spine .node .idx{
+  font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--olive);min-width:28px;
+}
+.spine .connector{
+  width:1px;height:22px;background:var(--line);margin-left:13px;
+}
+.spine .broken{
+  margin-top:28px;padding-top:20px;border-top:2px solid var(--olive);
+  font-size:clamp(15px,1.4vw,18px);font-weight:650;color:var(--olive);max-width:36ch;line-height:1.45;
+}
+.dark .spine .connector,.dark-2 .spine .connector,.olive .spine .connector{background:var(--line-d)}
+.dark .spine .node .idx,.dark-2 .spine .node .idx,.olive .spine .node .idx{color:#9BB06A}
+.dark .spine .broken,.dark-2 .spine .broken,.olive .spine .broken{color:#B7C98A;border-top-color:#B7C98A}
+
+/* QE outcomes — list with rules, secondary */
+.outcomes{display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:0}
+.outcomes .o{
+  padding:14px 18px 14px 0;border-bottom:1px solid var(--line);
+  font-size:14px;font-weight:700;letter-spacing:.04em;
+}
+.outcomes .o:nth-child(odd){padding-right:24px;border-right:1px solid var(--line)}
+.outcomes .o:nth-child(even){padding-left:24px}
+.outcomes .o .sub{display:block;font-size:12px;font-weight:500;color:var(--muted);margin-top:3px;letter-spacing:0}
+.outcomes .o.primary{color:var(--olive)}
+.dark .outcomes .o,.dark-2 .outcomes .o,.olive .outcomes .o{border-color:var(--line-d)}
+.dark .outcomes .o .sub,.dark-2 .outcomes .o .sub,.olive .outcomes .o .sub{color:rgba(247,247,243,.45)}
+.dark .outcomes .o.primary,.dark-2 .outcomes .o.primary,.olive .outcomes .o.primary{color:#B7C98A}
+
+/* ≠ equation */
+.neq-block{display:flex;align-items:center;gap:clamp(24px,4vw,56px);flex-wrap:wrap}
+.neq-block .side{
+  display:flex;flex-direction:column;gap:8px;
+}
+.neq-block .side .lab{
+  font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+}
+.dark .neq-block .side .lab,.dark-2 .neq-block .side .lab,.olive .neq-block .side .lab{color:rgba(247,247,243,.45)}
+.neq-block .side .val{
+  font-size:clamp(32px,4vw,56px);font-weight:750;letter-spacing:-.03em;line-height:1;
+}
+.neq-block .op{
+  font-size:clamp(36px,5vw,64px);font-weight:750;color:var(--olive);line-height:1;
+}
+.dark .neq-block .op,.dark-2 .neq-block .op,.olive .neq-block .op{color:#B7C98A}
+.neq-block .side .note{font-size:13px;color:var(--muted);max-width:22ch;line-height:1.4}
+.dark .neq-block .side .note,.dark-2 .neq-block .side .note,.olive .neq-block .side .note{color:rgba(247,247,243,.45)}
+
+/* control concepts — 4 columns editorial */
+.quad{display:grid;grid-template-columns:repeat(4,1fr);gap:0;flex:1;min-height:0;align-items:stretch}
+.quad .q{
+  padding:0 clamp(18px,2.2vw,32px);border-left:1px solid var(--line);
+  display:flex;flex-direction:column;justify-content:center;gap:12px;
+}
+.quad .q:first-child{border-left:0;padding-left:0}
+.quad .q .n{font-size:11px;font-weight:800;letter-spacing:.18em;color:var(--olive)}
+.quad .q .t{font-size:clamp(18px,1.9vw,26px);font-weight:750;letter-spacing:-.02em;line-height:1.15}
+.quad .q .d{font-size:13.5px;color:var(--muted);line-height:1.5}
+.dark .quad .q,.dark-2 .quad .q,.olive .quad .q{border-color:var(--line-d)}
+.dark .quad .q .n,.dark-2 .quad .q .n,.olive .quad .q .n{color:#9BB06A}
+.dark .quad .q .d,.dark-2 .quad .q .d,.olive .quad .q .d{color:rgba(247,247,243,.5)}
+
+/* big numbers */
+.bignums{display:grid;grid-template-columns:repeat(4,1fr);gap:0;flex:1;min-height:0;align-items:center}
+.bignums .b{
+  padding:0 clamp(20px,2.5vw,36px);border-left:1px solid var(--line);
+  display:flex;flex-direction:column;gap:8px;
+}
+.bignums .b:first-child{border-left:0;padding-left:0}
+.bignums .b .v{
+  font-size:clamp(48px,5.6vw,84px);font-weight:750;letter-spacing:-.04em;line-height:.95;color:var(--olive);
+}
+.bignums .b .k{
+  font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+}
+.bignums .b .s{font-size:13px;color:var(--muted)}
+.bignums .b .lab{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.subnums{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);padding-top:22px;margin-top:4px}
+.subnums .s{padding:0 clamp(16px,2vw,28px);border-left:1px solid var(--line)}
+.subnums .s:first-child{border-left:0;padding-left:0}
+.subnums .s .v{font-size:clamp(28px,3vw,40px);font-weight:750;letter-spacing:-.03em;color:var(--olive)}
+.subnums .s .k{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.subnums .s .d{font-size:13px;color:var(--muted);margin-top:2px}
+
+/* architecture layers */
+.arch{display:flex;flex-direction:column;gap:0;flex:1;justify-content:center}
+.arch .layer{
+  display:grid;grid-template-columns:1fr auto;gap:24px;align-items:baseline;
+  padding:18px 0;border-bottom:1px solid var(--line);
+}
+.arch .layer:last-child{border-bottom:0}
+.arch .layer strong{font-size:clamp(16px,1.6vw,20px);font-weight:750;letter-spacing:-.015em}
+.arch .layer span{font-size:13px;color:var(--muted);text-align:right}
+.arch .down{
+  font-size:11px;color:var(--olive-lt);letter-spacing:.2em;padding:2px 0 2px 2px;
+}
+.dark .arch .layer,.dark-2 .arch .layer,.olive .arch .layer{border-color:var(--line-d)}
+.dark .arch .layer span,.dark-2 .arch .layer span,.olive .arch .layer span{color:rgba(247,247,243,.45)}
+.dark .arch .down,.dark-2 .arch .down,.olive .arch .down{color:#9BB06A}
+
+/* status split */
+.status{display:grid;grid-template-columns:1fr 1fr;gap:0;flex:1;min-height:0;overflow:hidden}
+.status .col{padding:0 clamp(16px,3vw,48px);border-left:1px solid var(--line);display:flex;flex-direction:column;gap:6px;min-height:0;overflow:hidden}
+.status .col:first-child{border-left:0;padding-left:0}
+.status .col h3{
+  font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--olive);
+  padding-bottom:8px;border-bottom:2px solid var(--olive);margin-bottom:2px;
+}
+.status .col.road h3{color:var(--muted);border-bottom-color:var(--line)}
+.status .item{
+  display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  padding:7px 0;border-bottom:1px solid var(--line);font-size:14px;font-weight:650;
+}
+.status .item:last-child{border-bottom:0}
+.status .item .st{
+  font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--olive);
+  white-space:nowrap;
+}
+.status .col.road .item .st{color:var(--muted);font-weight:700}
+.status .col.road .item{color:var(--dim)}
+.status .note{
+  font-size:11px;color:var(--muted);line-height:1.45;margin-top:4px;
+}
+.dark .status .col,.dark-2 .status .col,.olive .status .col{border-color:var(--line-d)}
+.dark .status .item,.dark-2 .status .item,.olive .status .item{border-color:var(--line-d)}
+.dark .status .col h3,.dark-2 .status .col h3,.olive .status .col h3{color:#9BB06A;border-bottom-color:#9BB06A}
+.dark .status .col.road h3,.dark-2 .status .col.road h3,.olive .status .col.road h3{color:rgba(247,247,243,.4);border-bottom-color:var(--line-d)}
+.dark .status .col.road .item,.dark-2 .status .col.road .item,.olive .status .col.road .item{color:rgba(247,247,243,.4)}
+.dark .status .col.road .item .st,.dark-2 .status .col.road .item .st,.olive .status .col.road .item .st{color:rgba(247,247,243,.4)}
+.dark .status .item .st,.dark-2 .status .item .st,.olive .status .item .st{color:#B7C98A}
+.dark .status .note,.dark-2 .status .note,.olive .status .note{color:rgba(247,247,243,.45);border-color:var(--line-d)}
+
+/* roadmap timeline */
+.timeline{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:0;flex:1;min-height:0;align-items:stretch;
+  border-top:2px solid var(--line);padding-top:0;
+}
+.timeline .stop{
+  padding:20px clamp(10px,1.4vw,24px) 0;border-left:1px solid var(--line);
+  display:flex;flex-direction:column;gap:8px;position:relative;
+}
+.timeline .stop:first-child{border-left:0;padding-left:0}
+.timeline .stop::before{
+  content:"";position:absolute;top:-7px;left:clamp(10px,1.4vw,24px);
+  width:12px;height:12px;border-radius:50%;background:var(--paper);border:2px solid var(--line);
+}
+.timeline .stop:first-child::before{left:0}
+.timeline .stop.done::before{background:var(--olive);border-color:var(--olive)}
+.timeline .stop .n{font-size:12px;font-weight:800;letter-spacing:.16em;color:var(--muted)}
+.timeline .stop.done .n{color:var(--olive)}
+.timeline .stop .t{font-size:clamp(14px,1.35vw,17px);font-weight:750;letter-spacing:-.01em;line-height:1.2}
+.timeline .stop .s{margin-top:auto;font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding-bottom:8px}
+.timeline .stop.done .s{color:var(--olive)}
+.dark .timeline,.dark-2 .timeline,.olive .timeline{border-top-color:var(--line-d)}
+.dark .timeline .stop,.dark-2 .timeline .stop,.olive .timeline .stop{border-color:var(--line-d)}
+.dark .timeline .stop::before,.dark-2 .timeline .stop::before,.olive .timeline .stop::before{background:var(--ink);border-color:rgba(247,247,243,.3)}
+.dark .timeline .stop.done::before,.dark-2 .timeline .stop.done::before,.olive .timeline .stop.done::before{background:#9BB06A;border-color:#9BB06A}
+.dark .timeline .stop .n,.dark-2 .timeline .stop .n,.olive .timeline .stop .n{color:rgba(247,247,243,.4)}
+.dark .timeline .stop.done .n,.dark-2 .timeline .stop.done .n,.olive .timeline .stop.done .n{color:#B7C98A}
+.dark .timeline .stop .s,.dark-2 .timeline .stop .s,.olive .timeline .stop .s{color:rgba(247,247,243,.4)}
+.dark .timeline .stop.done .s,.dark-2 .timeline .stop.done .s,.olive .timeline .stop.done .s{color:#B7C98A}
+
+/* continuity ladder */
+.ladder{display:flex;flex-direction:column;gap:0;min-height:0}
+.ladder .rung{
+  display:grid;grid-template-columns:110px 1fr;gap:20px;align-items:center;
+  padding:11px 0;border-bottom:1px solid var(--line);
+}
+.ladder .rung:last-child{border-bottom:0}
+.ladder .rung .ph{
+  font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--olive);
+}
+.ladder .rung .ev{font-size:15px;font-weight:650;letter-spacing:-.01em}
+.ladder .rung.hl{background:rgba(74,93,35,.06);margin:0 -12px;padding-left:12px;padding-right:12px}
+.dark .ladder .rung,.dark-2 .ladder .rung,.olive .ladder .rung{border-color:var(--line-d)}
+.dark .ladder .rung .ph,.dark-2 .ladder .rung .ph,.olive .ladder .rung .ph{color:#9BB06A}
+.dark .ladder .rung.hl,.dark-2 .ladder .rung.hl,.olive .ladder .rung.hl{background:rgba(183,201,138,.08)}
+
+/* samples strip */
+.samples{display:flex;gap:0;align-items:stretch;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.samples .sm{
+  flex:1;padding:16px 18px 16px 0;border-right:1px solid var(--line);
+}
+.samples .sm:last-child{border-right:0}
+.samples .sm:not(:first-child){padding-left:18px}
+.samples .sm .id{font-size:13px;font-weight:800;letter-spacing:.1em;color:var(--olive)}
+.samples .sm .meta-s{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.45}
+.samples .sm .val{font-size:22px;font-weight:750;letter-spacing:-.02em;margin-top:8px}
+.dark .samples,.dark-2 .samples,.olive .samples{border-color:var(--line-d)}
+.dark .samples .sm,.dark-2 .samples .sm,.olive .samples .sm{border-color:var(--line-d)}
+.dark .samples .sm .id,.dark-2 .samples .sm .id,.olive .samples .sm .id{color:#B7C98A}
+.dark .samples .sm .meta-s,.dark-2 .samples .sm .meta-s,.olive .samples .sm .meta-s{color:rgba(247,247,243,.45)}
+
+/* CTA */
+.cta{
+  display:inline-flex;align-items:center;gap:12px;
+  min-height:52px;padding:0 28px;
+  background:var(--olive);color:#fff;font-weight:750;font-size:15px;letter-spacing:.06em;
+  transition:background .15s ease,transform .15s ease;
+}
+.cta:hover{background:#3A4D1B;transform:translateY(-1px)}
+.cta.ghost{
+  background:transparent;color:var(--cream);border:1px solid rgba(247,247,243,.28);
+}
+.cta.ghost:hover{background:rgba(255,255,255,.06)}
+.cta .arrow{font-weight:600;opacity:.8}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.cta-note{font-size:13px;color:rgba(247,247,243,.5);letter-spacing:.04em}
+
+/* footer notes */
+.foot{
+  display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  font-size:12px;color:var(--muted);letter-spacing:.04em;
+  padding-top:14px;border-top:1px solid var(--line);flex-shrink:0;
+}
+.dark .foot,.dark-2 .foot,.olive .foot{color:rgba(247,247,243,.4);border-color:var(--line-d)}
+
+/* cover layout */
+.cover{display:grid;grid-template-columns:1.2fr .9fr;gap:clamp(32px,5vw,72px);flex:1;min-height:0;align-items:center}
+.cover .visual{
+  position:relative;min-height:0;height:100%;
+  border:1px solid rgba(247,247,243,.12);overflow:hidden;
+  box-shadow:0 32px 80px rgba(0,0,0,.4);
+}
+.cover .visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;opacity:.92}
+.cover .visual::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(28,36,20,.35),transparent 55%);
+  pointer-events:none;
+}
+.cover .logo{height:clamp(40px,4.5vw,56px);width:auto;margin-bottom:clamp(24px,4vh,40px)}
+.cover .meta-line{
+  display:flex;gap:28px;flex-wrap:wrap;margin-top:clamp(24px,4vh,40px);
+  font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(247,247,243,.45);
+}
+.cover .tag{
+  margin-top:22px;font-size:clamp(16px,1.5vw,20px);font-weight:650;color:#B7C98A;letter-spacing:-.01em;
+}
+.cover .sub{
+  margin-top:14px;font-size:clamp(16px,1.5vw,20px);color:rgba(247,247,243,.6);max-width:28ch;line-height:1.45;
+}
+
+/* close layout */
+.close-wrap{
+  flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:clamp(20px,3vh,32px);
+}
+.close-wrap .logo{height:clamp(44px,5vw,64px);width:auto}
+.close-wrap .big{
+  font-size:clamp(40px,5.5vw,78px);font-weight:750;letter-spacing:-.035em;line-height:1.02;max-width:16ch;
+}
+.close-wrap .big .hi{color:#B7C98A}
+.close-wrap .who{
+  font-size:14px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:rgba(247,247,243,.5);
+}
+
+/* process dual */
+.dual{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,56px);min-height:0;flex:1}
+.dual .pane{display:flex;flex-direction:column;gap:14px;min-height:0}
+.dual .pane .hd{
+  font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--olive);
+  padding-bottom:10px;border-bottom:2px solid var(--olive);
+}
+.dark .dual .pane .hd,.dark-2 .dual .pane .hd,.olive .dual .pane .hd{color:#9BB06A;border-bottom-color:#9BB06A}
+.dual .pane .line{
+  font-size:clamp(15px,1.5vw,19px);font-weight:700;letter-spacing:-.01em;padding:10px 0;
+  border-bottom:1px solid var(--line);
+}
+.dual .pane .line:last-child{border-bottom:0}
+.dual .pane .line .m{display:block;font-size:13px;font-weight:500;color:var(--muted);margin-top:3px}
+.dark .dual .pane .line,.dark-2 .dual .pane .line,.olive .dual .pane .line{border-color:var(--line-d)}
+.dark .dual .pane .line .m,.dark-2 .dual .pane .line .m,.olive .dual .pane .line .m{color:rgba(247,247,243,.45)}
+
+/* chrome — discrete */
+.chrome{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:10px 20px 14px;
+  background:linear-gradient(to top,rgba(10,11,9,.94),rgba(10,11,9,0));
+  pointer-events:none;
+}
+.chrome > *{pointer-events:auto}
+.progress-wrap{display:flex;align-items:center;gap:14px;flex:1;min-width:0}
+.progress{flex:1;height:2px;background:rgba(255,255,255,.14);max-width:360px;overflow:hidden}
+.progress > i{display:block;height:100%;width:0;background:#9BB06A;transition:width .3s ease}
+.counter{color:rgba(247,247,243,.7);font-size:11px;font-weight:700;letter-spacing:.18em;white-space:nowrap}
+.nav{display:flex;gap:6px;align-items:center}
+.nav button{
+  min-height:32px;min-width:32px;padding:0 12px;
+  background:transparent;color:rgba(247,247,243,.75);
+  border:1px solid rgba(255,255,255,.14);
+  font-size:12px;font-weight:700;letter-spacing:.06em;
+  transition:background .12s ease,border-color .12s ease;
+}
+.nav button:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.28);color:#fff}
+.nav button.accent{background:var(--olive);border-color:var(--olive);color:#fff}
+.nav button.accent:hover{background:#3A4D1B;border-color:#3A4D1B}
+
+.hint{
+  position:fixed;top:14px;right:16px;z-index:50;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(247,247,243,.55);background:rgba(10,11,9,.75);
+  border:1px solid rgba(255,255,255,.1);padding:7px 12px;
+  backdrop-filter:blur(8px);opacity:1;transition:opacity .4s ease;
+}
+.hint.hide{opacity:0}
+
+/* index modal */
+.modal{
+  position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;
+  background:rgba(8,9,7,.8);backdrop-filter:blur(8px);padding:24px;
+}
+.modal.open{display:flex}
+.modal-panel{
+  width:min(640px,100%);max-height:min(80vh,700px);overflow:auto;
+  background:var(--paper);border:1px solid var(--line);padding:28px;color:var(--ink);
+}
+.modal-panel h3{
+  font-size:14px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--olive);margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--line);
+}
+.idx-list{display:flex;flex-direction:column}
+.idx-list button{
+  text-align:left;padding:12px 0;border-bottom:1px solid var(--line);
+  font-weight:650;font-size:14px;letter-spacing:-.01em;
+  transition:padding-left .12s ease,color .12s ease;
+}
+.idx-list button:hover{padding-left:8px;color:var(--olive)}
+.idx-list button.active{color:var(--olive);font-weight:800}
+.idx-list button:last-child{border-bottom:0}
+.modal-close{
+  margin-top:18px;min-height:40px;padding:0 18px;
+  background:var(--ink);color:var(--cream);font-size:13px;font-weight:700;letter-spacing:.08em;
+}
+
+/* demo panel */
+.demo-panel{
+  position:fixed;inset:0;z-index:90;display:none;background:#0A0B09;
+  color:var(--cream);padding:clamp(28px,5vh,56px) clamp(28px,5vw,72px);overflow:auto;
+}
+.demo-panel.open{display:block}
+.demo-panel .eyebrow{
+  font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#9BB06A;
+  margin-bottom:14px;
+}
+.demo-panel h2{font-size:clamp(28px,3vw,40px);letter-spacing:-.03em;font-weight:750;margin-bottom:10px}
+.demo-panel .lede-d{
+  color:rgba(247,247,243,.55);margin-bottom:28px;max-width:64ch;line-height:1.55;font-size:15px;
+}
+.demo-panel .lede-d code{
+  font-size:13px;background:rgba(255,255,255,.07);padding:2px 6px;letter-spacing:.02em;
+}
+.demo-list{display:flex;flex-direction:column;max-width:720px;border-top:1px solid rgba(255,255,255,.12)}
+.demo-list a{
+  display:grid;grid-template-columns:48px 1fr auto;gap:16px;align-items:center;
+  padding:16px 0;border-bottom:1px solid rgba(255,255,255,.12);
+  transition:padding-left .12s ease;
+}
+.demo-list a:hover{padding-left:8px}
+.demo-list a .n{font-size:11px;font-weight:800;letter-spacing:.16em;color:#9BB06A}
+.demo-list a .t{font-size:16px;font-weight:700}
+.demo-list a .t span{display:block;font-size:13px;font-weight:500;color:rgba(247,247,243,.45);margin-top:3px}
+.demo-list a .go{font-size:12px;font-weight:700;letter-spacing:.1em;color:rgba(247,247,243,.5)}
+.demo-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px;align-items:center}
+.demo-base{
+  font-size:12px;color:rgba(247,247,243,.4);letter-spacing:.06em;
+}
+.demo-base code{background:rgba(255,255,255,.07);padding:3px 7px;color:#B7C98A}
+
+/* responsive */
+@media (max-height:820px){
+  .slide{padding-top:clamp(24px,3.5vh,40px);padding-bottom:clamp(44px,6vh,64px)}
+  .meta{margin-bottom:clamp(12px,2vh,24px)}
+  h2.title{font-size:clamp(28px,3.6vw,48px)}
+  .lede{font-size:clamp(14px,1.3vw,17px);margin-top:10px}
+  .body{gap:clamp(10px,1.6vh,18px)}
+  .concepts .c{gap:4px}
+  .concepts .c .hd{font-size:clamp(15px,1.5vw,22px)}
+  .concepts .c .tx{font-size:12px;line-height:1.35}
+  .concepts .c .lab{font-size:10px}
+  .status .col{gap:4px}
+  .status .item{padding:5px 0;font-size:13px}
+  .status .col h3{padding-bottom:6px;margin-bottom:0}
+  .status .note{font-size:10px;margin-top:2px}
+  .foot{padding-top:8px;font-size:11px}
+  .kicker{margin-bottom:8px}
+  .statement{font-size:clamp(22px,2.6vw,36px)}
+  .spine .node{padding:9px 0;font-size:14px}
+  .spine .connector{height:14px}
+  .spine .broken{margin-top:14px;padding-top:12px;font-size:14px}
+  .hier .lvl{padding:10px 0}
+  .hier .v strong{font-size:15px}
+  .hier .v span{font-size:12px}
+  .truth{font-size:clamp(13px,1.4vw,18px)}
+  .truth .sep{padding:0 8px}
+  .timeline .stop{padding-top:14px;gap:6px}
+  .timeline .stop .s{padding-bottom:4px}
+  .quad .q{padding-top:12px!important}
+  .bignums .b .v{font-size:clamp(36px,5vw,64px)}
+  .subnums .s{padding-top:8px!important}
+  .neq-block{gap:20px}
+  .arch .layer{padding:10px 14px!important}
+  .ladder .rung{padding:8px 0}
+}
+@media (max-width:1100px){
+  .split,.split.ratio-wide,.split.ratio-copy,.cover{grid-template-columns:1fr}
+  .concepts,.quad,.bignums,.status,.dual{grid-template-columns:1fr 1fr}
+  .concepts .c,.quad .q,.bignums .b{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:16px}
+  .concepts .c:first-child,.quad .q:first-child,.bignums .b:first-child{border-top:0;padding-top:0}
+  .timeline{grid-template-columns:repeat(3,1fr);gap:12px 0}
+  .status .col{border-left:0;padding-left:0}
+  .status .col.road{border-top:1px solid var(--line);padding-top:20px}
+  .subnums{grid-template-columns:1fr}
+  .subnums .s{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:12px;margin-top:8px}
+  .subnums .s:first-child{border-top:0}
+}
+@media (max-width:720px){
+  .slide{padding:24px 18px 72px}
+  .concepts,.quad,.bignums,.status,.dual,.outcomes,.timeline,.samples{grid-template-columns:1fr}
+  .concepts .c,.quad .q,.bignums .b,.timeline .stop,.samples .sm,.outcomes .o{
+    border-left:0!important;padding-left:0!important;
+    border-top:1px solid var(--line);padding-top:14px;
+  }
+  .concepts .c:first-child,.quad .q:first-child,.bignums .b:first-child,.timeline .stop:first-child,.samples .sm:first-child,.outcomes .o:first-child{
+    border-top:0;padding-top:0;
+  }
+  .status .col.road{border-top:1px solid var(--line);padding-top:20px}
+  .hier .lvl{grid-template-columns:1fr;gap:6px}
+  .neq-block{flex-direction:column;align-items:flex-start;gap:18px}
+  .chrome{flex-wrap:wrap}
+  .cover .visual{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- 01 PORTADA -->
+  <section class="slide olive active" data-title="01 · Portada">
+    <div class="cover">
+      <div>
+        <img class="logo" src="assets/logos/logotipo_horizontal.png" alt="NX Quality" />
+        <h1 class="hero">Control de calidad<br />y <span class="accent">trazabilidad</span><br />operacional.</h1>
+        <p class="sub">Para fruta fresca y operación en terreno.</p>
+        <p class="tag">Del lote a la trazabilidad.</p>
+        <div class="cta-row" style="margin-top:clamp(28px,4vh,44px)">
+          <a class="cta" id="coverDemo" href="http://localhost:3000" target="_blank" rel="noopener">VER DEMO <span class="arrow">→</span></a>
+        </div>
+        <div class="meta-line">
+          <span>NXChile</span>
+          <span>Presentación ejecutiva</span>
+          <span>01–07 verificado</span>
+        </div>
+      </div>
+      <div class="visual">
+        <img src="assets/screenshots/dashboard.png" alt="" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 EL PROBLEMA -->
+  <section class="slide" data-title="02 · El problema">
+    <div class="meta">
+      <span class="num">02</span>
+      <span class="rule"></span>
+      <span class="sec">El problema</span>
+    </div>
+    <div class="body">
+      <div class="split ratio-copy">
+        <div class="center">
+          <p class="kicker">Operación real</p>
+          <h2 class="title">El problema no es registrar.<br />Es <em>reconstruir</em>.</h2>
+          <p class="lede">En la operación conviven lote, inspección, medición, decisión e historia. El desafío es volver sobre lo ocurrido.</p>
+        </div>
+        <div class="spine">
+          <div class="node"><span class="idx">01</span>LOTE</div>
+          <div class="connector"></div>
+          <div class="node"><span class="idx">02</span>INSPECCIÓN</div>
+          <div class="connector"></div>
+          <div class="node"><span class="idx">03</span>MEDICIONES</div>
+          <div class="connector"></div>
+          <div class="node"><span class="idx">04</span>DECISIÓN</div>
+          <div class="connector"></div>
+          <div class="node"><span class="idx">05</span>HISTORIA</div>
+          <p class="broken">Sin relación forzada entre capas, el estado actual no explica cómo se llegó a él.</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <span>Información dispersa · contexto perdido · historial frágil</span>
+      <span>02</span>
+    </div>
+  </section>
+
+  <!-- 03 LA PROPUESTA -->
+  <section class="slide" data-title="03 · La propuesta">
+    <div class="meta">
+      <span class="num">03</span>
+      <span class="rule"></span>
+      <span class="sec">La propuesta</span>
+    </div>
+    <div class="body">
+      <div style="flex:0 0 auto">
+        <p class="kicker">Plataforma integrada</p>
+        <h2 class="title" style="font-size:clamp(26px,3.2vw,44px)">Una misma historia operacional.</h2>
+      </div>
+      <div class="split ratio-wide" style="flex:1;min-height:0">
+        <div class="stack" style="justify-content:center;overflow:hidden">
+          <div class="concepts" style="grid-template-columns:1fr;flex:0 1 auto;gap:clamp(8px,1.6vh,28px);min-height:0;overflow:hidden">
+            <div class="c" style="border:0;padding:0">
+              <span class="lab">01</span>
+              <span class="hd">LOTES</span>
+              <span class="tx">Identidad operacional por bloque de cosecha.</span>
+            </div>
+            <div class="c" style="border:0;padding:0;border-top:1px solid var(--line);padding-top:clamp(8px,1.6vh,24px)">
+              <span class="lab">02</span>
+              <span class="hd">INSPECCIONES</span>
+              <span class="tx">Criterios, muestras, evidencia y cierre validado.</span>
+            </div>
+            <div class="c" style="border:0;padding:0;border-top:1px solid var(--line);padding-top:clamp(8px,1.6vh,24px)">
+              <span class="lab">03</span>
+              <span class="hd">DECISIONES + TRAZABILIDAD</span>
+              <span class="tx">Respaldo técnico y memoria reconstruible.</span>
+            </div>
+          </div>
+        </div>
+        <div class="frame dominant">
+          <img src="assets/screenshots/dashboard.png" alt="Dashboard NX Quality" />
+          <span class="cap">Captura real · Dashboard</span>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <span>Master data · Lotes · Inspecciones · QE · Decisiones · Trazabilidad</span>
+      <span>03</span>
+    </div>
+  </section>
+
+  <!-- 04 MODELO OPERACIONAL -->
+  <section class="slide dark-2" data-title="04 · Modelo operacional">
+    <div class="meta">
+      <span class="num">04</span>
+      <span class="rule"></span>
+      <span class="sec">Modelo operacional</span>
+    </div>
+    <div class="body">
+      <div class="split">
+        <div class="center">
+          <p class="kicker">Arquitectura real</p>
+          <h2 class="title">Cada concepto tiene una <em>función distinta</em>.</h2>
+          <p class="lede">Empresa, especie, etapa, punto y criterio no se mezclan. El flujo de verdad es una cadena, no un formulario único.</p>
+          <div class="truth" style="margin-top:28px">
+            <span>LOTE</span><span class="sep">→</span>
+            <span>INSPECCIÓN</span><span class="sep">→</span>
+            <span>MEDICIÓN</span><span class="sep">→</span>
+            <span>EVALUACIÓN</span><span class="sep">→</span>
+            <span>DECISIÓN</span><span class="sep">→</span>
+            <span>HISTORIA</span>
+          </div>
+        </div>
+        <div class="hier">
+          <div class="lvl"><span class="k">Company</span><div class="v"><strong>Empresa</strong><span>Aislamiento por RLS y ámbito de operación.</span></div></div>
+          <div class="lvl"><span class="k">Species</span><div class="v"><strong>Especie / variedad</strong><span>Define el catálogo de criterios aplicables.</span></div></div>
+          <div class="lvl"><span class="k">Stage</span><div class="v"><strong>Etapa operacional</strong><span>Dónde está el lote en el recorrido.</span></div></div>
+          <div class="lvl"><span class="k">Point</span><div class="v"><strong>Punto de inspección</strong><span>Contexto concreto de captura en terreno.</span></div></div>
+          <div class="lvl"><span class="k">Criteria</span><div class="v"><strong>Criterios</strong><span>Mediciones con límites y obligatoriedad.</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <span>Estado ≠ etapa · la inspección origina etapa (D-017 / D-018b)</span>
+      <span>04</span>
+    </div>
+  </section>
+
+  <!-- 05 EL LOTE -->
+  <section class="slide" data-title="05 · El lote">
+    <div class="meta">
+      <span class="num">05</span>
+      <span class="rule"></span>
+      <span class="sec">El lote</span>
+    </div>
+    <div class="body">
+      <div class="split ratio-wide">
+        <div class="center">
+          <p class="kicker">Unidad operacional</p>
+          <h2 class="title">El lote es la unidad central.</h2>
+          <div class="stack" style="margin-top:28px;gap:0">
+            <p style="font-size:clamp(17px,1.7vw,22px);font-weight:700;letter-spacing:-.015em;line-height:1.35;padding:16px 0;border-bottom:1px solid var(--line)">
+              Identificación por bloque de cosecha.
+            </p>
+            <p style="font-size:clamp(17px,1.7vw,22px);font-weight:700;letter-spacing:-.015em;line-height:1.35;padding:16px 0;border-bottom:1px solid var(--line)">
+              Estado informativo, sin selector arbitrario.
+            </p>
+            <p style="font-size:clamp(17px,1.7vw,22px);font-weight:700;letter-spacing:-.015em;line-height:1.35;padding:16px 0">
+              Desde aquí comienza la historia.
+            </p>
+          </div>
+        </div>
+        <div class="frame dominant">
+          <img src="assets/screenshots/lots.png" alt="Pantalla de lotes" />
+          <span class="cap">Captura real · Lotes</span>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <span>03 LOTS · COMPLETADA · CERRADO terminal</span>
+      <span>05</span>
+    </div>
+  </section>
+
+  <!-- 06 INSPECCIÓN -->
+  <section class="slide" data-title="06 · Inspección">
+    <div class="meta">
+      <span class="num">06</span>
+      <span class="rule"></span>
+      <span class="sec">Inspección</span>
+    </div>
+    <div class="body">
+      <div class="grid-2" style="display:grid;grid-template-columns:1.25fr .9fr;gap:clamp(24px,3vw,48px);min-height:0;flex:1;align-items:stretch">
+        <div class="frame dominant">
+          <img src="assets/screenshots/inspection-detail.png" alt="Detalle de inspección" />
+          <span class="cap">Captura real · Detalle de inspección</span>
+        </div>
+        <div class="stack" style="justify-content:center">
+          <div>
+            <p class="kicker">Flujo real</p>
+            <div class="flow-h" style="flex-direction:column;align-items:flex-start;gap:0">
+              <span class="n" style="padding-top:0">LOTE → PUNTO → ETAPA → CRITERIOS</span>
+              <span class="n">→ MUESTRAS → MEDICIONES → EVIDENCIA → RESULTADO</span>
+            </div>
+          </div>
+          <div style="margin-top:20px;padding-top:20px;border-top:2px solid var(--olive)">
+            <p class="kicker" style="margin-bottom:10px">Continuidad</p>
+            <div class="ladder">
+              <div class="rung"><span class="ph">Huerto</span><span class="ev">Inspección + recomendación</span></div>
+              <div class="rung hl"><span class="ph">Control</span><span class="ev">Nuevo punto · enlace al anterior</span></div>
+              <div class="rung"><span class="ph">Cosecha</span><span class="ev">Continuidad operacional</span></div>
+            </div>
+          </div>
+          <div style="margin-top:22px;display:flex;flex-direction:column;gap:8px">
+            <p style="font-size:clamp(16px,1.5vw,19px);font-weight:700;letter-spacing:-.015em;line-height:1.35">
+              Una inspección no termina necesariamente la historia.
+            </p>
+            <p style="font-size:clamp(15px,1.4vw,17px);color:var(--muted);line-height:1.45">
+              Una nueva inspección puede continuar la anterior.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <span>Muestras M01–M03 · consolidado · evidencia por muestra · cierre validado</span>
+      <span>06</span>
+    </div>
+  </section>
+
+  <!-- 07 QUALITY ENGINE -->
+  <section class="slide dark" data-title="07 · Quality Engine">
+    <div class="meta">
+      <span class="num">07</span>
+      <span class="rule"></span>
+      <span class="sec">Quality Engine</span>
+    </div>
+    <div class="body">
+      <div class="center" style="flex:0 0 auto">
+        <p class="kicker">Evaluación determinística · D-023</p>
+        <h2 class="title">El motor evalúa.<br /><em>La persona decide.</em></h2>
+        <div class="truth" style="margin-top:32px;font-size:clamp(16px,1.9vw,26px)">
+          <span>MEDICIÓN</span><span class="sep">+</span>
+          <span>CRITERIO CONFIGURADO</span><span class="sep">→</span>
+          <span>QUALITY ENGINE</span><span class="sep">→</span>
+          <span>RESULTADO</span>
+        </div>
+      </div>
+      <div class="split" style="margin-top:clamp(20px,3vh,36px)">
+        <div>
+          <p class="kicker" style="margin-bottom:6px">Resultados posibles</p>
+          <div class="outcomes">
+            <div class="o primary">CUMPLE<span class="sub">dentro de criterio</span></div>
+            <div class="o primary">DESVIACIÓN<span class="sub">fuera de límite</span></div>
+            <div class="o">SIN CRITERIO<span class="sub">sin min/max configurado</span></div>
+            <div class="o">UNIDAD INCOMPATIBLE<span class="sub">no evalúa</span></div>
+            <div class="o">CONFIGURACIÓN AMBIGUA<span class="sub">min &gt; max</span></div>
+            <div class="o">CRITERIO INACTIVO<span class="sub">def deshabilitado</span></div>
+          </div>
+        </div>
+        <div class="stack" style="justify-content:center;gap:0">
+          <p style="font-size:clamp(16px,1.5vw,20px);font-weight:700;line-height:1.4;letter-spacing:-.015em;padding:16px 0;border-bottom:1px solid var(--line-d)">
+            Snapshot del criterio al momento de evaluar.
+          </p>
+          <p style="font-size:clamp(16px,1.5vw,20px);font-weight:700;line-height:1.4;letter-spacing:-.015em;padding:16px 0;border-bottom:1px solid var(--line-d)">
+            No altera etapa, estado ni decisión.
+          </p>
+          <p style="font-size:clamp(16px,1.5vw,20px);font-weight:700;line-height:1.4;letter-spacing:-.015em;padding:16px 0">
+            E2E etapa 05 · <span style="color:#B7C98A">23/23 PASS</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <span>POST/GET /api/quality/evaluate · quality_evaluations append-only</span>
+      <span>07</span>
+    </div>
+  </section>
+
+  <!-- 08 DECISIONES -->
+  <section class="slide" data-title="08 · Decisiones">
+    <div class="meta">
+      <span class="num">08</span>
+      <span class="rule"></span>
+      <span class="sec">Decisiones</span>
+    </div>
+    <div class="body">
+      <div class="grid-2" style="display:grid;grid-template-columns:.95fr 1.15fr;gap:clamp(28px,4vw,56px);min-height:0;flex:1;align-items:stretch">
+        <div class="stack" style="justify-content:center">
+          <div class="neq-block">
+            <div class="side">
+              <span class="lab">El sistema</span>
+              <span class="val">EVALUACIÓN</span>
+              <span class="note">Respaldo técnico determinístico.</span>
+            </div>
+            <div class="op">≠</div>
+            <div class="side">
+              <span class="lab">La persona</span>
+              <span class="val">DECISIÓN</span>
+              <span class="note">Juicio con fundamento y contexto.</span>
+            </div>
+          </div>
+          <p style="font-size:clamp(17px,1.7vw,22px);font-weight:700;letter-spacing:-.015em;line-height:1.4;margin-top:28px;max-width:32ch">
+            El sistema entrega respaldo técnico.<br />La decisión permanece humana.
+          </p>
+          <p style="font-size:13px;color:var(--muted);margin-top:16px;letter-spacing:.03em;line-height:1.5">
+            <code style="font-size:12px;background:rgba(74,93,35,.08);padding:2px 6px">decision_effects</code>
+            permanece vacío por diseño (D-024). No se inventan transiciones automáticas.
+          </p>
+        </div>
+        <div class="frame dominant">
+          <img src="assets/screenshots/lot-decision.png" alt="Modal de decisión" />
+          <span class="cap">Captura real · Decisión del lote</span>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <span>Append-only · anulación trazable · E2E 12/12</span>
+      <span>08</span>
+    </div>
+  </section>
+
+  <!-- 09 TRAZABILIDAD -->
+  <section class="slide dark" data-title="09 · Trazabilidad">
+    <div class="meta">
+      <span class="num">09</span>
+      <span class="rule"></span>
+      <span class="sec">Trazabilidad</span>
+    </div>
+    <div class="body">
+      <div class="split ratio-copy">
+        <div class="center">
+          <p class="kicker">Diferencial</p>
+          <h2 class="title" style="max-width:16ch">
+            No solo sabemos dónde está el lote.<br />
+            <em>Podemos reconstruir qué ocurrió.</em>
+          </h2>
+          <div class="truth" style="margin-top:36px">
+            <span>LOTE</span><span class="sep">→</span>
+            <span>INSPECCIÓN</span><span class="sep">→</span>
+            <span>EVIDENCIA</span><span class="sep">→</span>
+            <span>RESULTADO</span><span class="sep">→</span>
+            <span>DECISIÓN</span><span class="sep">→</span>
+            <span>HISTORIA</span>
+          </div>
+          <p class="tagline" style="margin-top:28px">
+            Qué ocurrió · cuándo · quién · estado anterior y nuevo · secuencia reconstruible.
+          </p>
+        </div>
+        <div class="frame dominant">
+          <img src="assets/screenshots/lot-history.png" alt="Historia del lote" />
+          <span class="cap">Captura real · Historia del lote</span>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <span>GET /api/traceability · audit_logs + dominio · E2E 18/18</span>
+      <span>09</span>
+    </div>
+  </section>
+
+  <!-- 10 CONTROL Y AUDITORÍA -->
+  <section class="slide" data-title="10 · Control y auditoría">
+    <div class="meta">
+      <span class="num">10</span>
+      <span class="rule"></span>
+      <span class="sec">Control y auditoría</span>
+    </div>
+    <div class="body">
+      <div>
+        <p class="kicker">Memoria operacional protegida</p>
+        <h2 class="title" style="max-width:18ch">Controles técnicos que respaldan la operación.</h2>
+      </div>
+      <div class="quad">
+        <div class="q">
+          <span class="n">01</span>
+          <span class="t">AISLAMIENTO</span>
+          <span class="d">Los eventos de una empresa no se exponen a otra. RLS por ámbito.</span>
+        </div>
+        <div class="q">
+          <span class="n">02</span>
+          <span class="t">ACTOR</span>
+          <span class="d">Cada evento identifica entidad, usuario y operación.</span>
+        </div>
+        <div class="q">
+          <span class="n">03</span>
+          <span class="t">TIEMPO</span>
+          <span class="d">Fecha/hora y secuencia cronológica. Operaciones fallidas no se registran como éxito.</span>
+        </div>
+        <div class="q">
+          <span class="n">04</span>
+          <span class="t">HISTORIA</span>
+          <span class="d">Append-only en audit_logs, lot_stage_events y quality_evaluations. Anulación sin borrar el original.</span>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <span>Fuentes: audit_logs · lot_stage_events · quality_evaluations · decisions</span>
+      <span>10</span>
+    </div>
+  </section>
+
+  <!-- 11 VALIDACIÓN REAL -->
+  <section class="slide dark-2" data-title="11 · Validación real">
+    <div class="meta">
+      <span class="num">11</span>
+      <span class="rule"></span>
+      <span class="sec">Validación real</span>
+    </div>
+    <div class="body">
+      <div>
+        <p class="kicker">Evidencia técnica · BUILD_STATUS</p>
+        <h2 class="title">Pruebas del estado actual.</h2>
+      </div>
+      <div class="bignums">
+        <div class="b">
+          <span class="lab">Inspecciones</span>
+          <span class="v">30/30</span>
+          <span class="k">ETAPA 04</span>
+          <span class="s">PASS</span>
+        </div>
+        <div class="b">
+          <span class="lab">Quality Engine</span>
+          <span class="v">23/23</span>
+          <span class="k">ETAPA 05</span>
+          <span class="s">PASS</span>
+        </div>
+        <div class="b">
+          <span class="lab">Decisiones</span>
+          <span class="v">12/12</span>
+          <span class="k">ETAPA 06</span>
+          <span class="s">PASS</span>
+        </div>
+        <div class="b">
+          <span class="lab">Trazabilidad</span>
+          <span class="v">18/18</span>
+          <span class="k">ETAPA 07</span>
+          <span class="s">PASS</span>
+        </div>
+      </div>
+      <div class="subnums">
+        <div class="s">
+          <div class="v">0</div>
+          <div class="k">Typecheck</div>
+          <div class="d">errores TypeScript</div>
+        </div>
+        <div class="s">
+          <div class="v">0</div>
+          <div class="k">Build</div>
+          <div class="d">next build OK</div>
+        </div>
+        <div class="s">
+          <div class="v">OK</div>
+          <div class="k">Lint</div>
+          <div class="d">0 errores · warnings preexistentes</div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <span>e2e_inspections · e2e_quality_engine · e2e_decisions · e2e_traceability</span>
+      <span>11</span>
+    </div>
+  </section>
+
+  <!-- 12 ARQUITECTURA -->
+  <section class="slide" data-title="12 · Arquitetura">
+    <div class="meta">
+      <span class="num">12</span>
+      <span class="rule"></span>
+      <span class="sec">Arquitectura</span>
+    </div>
+    <div class="body">
+      <div class="split">
+        <div class="center">
+          <p class="kicker">Por capas</p>
+          <h2 class="title">Simple, por capas.</h2>
+          <p class="lede">Web sobre APIs y lógica de dominio, con Supabase como base. Solo componentes realmente implementados.</p>
+          <div class="stack" style="margin-top:28px;gap:0;font-size:14px;color:var(--muted)">
+            <p style="padding:10px 0;border-bottom:1px solid var(--line)">Next.js · Cloudflare Workers · OpenNext</p>
+            <p style="padding:10px 0;border-bottom:1px solid var(--line)">Supabase Auth · RLS · Storage de evidencia</p>
+            <p style="padding:10px 0">OpenRouter FREE · asistente server-side (no decide)</p>
+          </div>
+        </div>
+        <div class="arch">
+          <div class="layer"><strong>USUARIO</strong><span>operador · inspector · admin</span></div>
+          <div class="down">↓</div>
+          <div class="layer"><strong>NEXT.JS / WEB</strong><span>dashboard · landing · reportes</span></div>
+          <div class="down">↓</div>
+          <div class="layer"><strong>APIs + DOMAIN</strong><span>auth · quality · decisions · traceability · ai</span></div>
+          <div class="down">↓</div>
+          <div class="layer"><strong>SUPABASE</strong><span>Postgres</span></div>
+          <div class="down">↓</div>
+          <div class="layer"><strong>DATOS + RLS + STORAGE</strong><span>triggers · evidencia · aislamiento</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <span>Solo componentes reales · IA no cierra inspecciones ni decide</span>
+      <span>12</span>
+    </div>
+  </section>
+
+  <!-- 13 ESTADO ACTUAL -->
+  <section class="slide" data-title="13 · Estado actual">
+    <div class="meta">
+      <span class="num">13</span>
+      <span class="rule"></span>
+      <span class="sec">Estado actual</span>
+    </div>
+    <div class="body">
+      <div>
+        <p class="kicker">BUILD_STATUS</p>
+        <h2 class="title">Ya existe una base operacional verificable.</h2>
+        <p class="lede">La evolución continúa sobre ella. No presentamos 08–11 como terminadas.</p>
+      </div>
+      <div class="status">
+        <div class="col">
+          <h3>01–07 · Implementado + verificado</h3>
+          <div class="item"><span>01 Foundation</span><span class="st">Completa</span></div>
+          <div class="item"><span>02 Master Data</span><span class="st">Completa</span></div>
+          <div class="item"><span>03 Lots</span><span class="st">Completa</span></div>
+          <div class="item"><span>04 Inspections</span><span class="st">Completa</span></div>
+          <div class="item"><span>05 Quality Engine</span><span class="st">Completa</span></div>
+          <div class="item"><span>06 Decisions</span><span class="st">Completa</span></div>
+          <div class="item"><span>07 Traceability</span><span class="st">Completa</span></div>
+        </div>
+        <div class="col road">
+          <h3>08–11 · Roadmap</h3>
+          <div class="item"><span>08 Transformations</span><span class="st">En espera</span></div>
+          <div class="item"><span>09 Offline</span><span class="st">En espera</span></div>
+          <div class="item"><span>10 Operational View</span><span class="st">En espera</span></div>
+          <div class="item"><span>11 Analytics</span><span class="st">En espera</span></div>
+          <p class="note">
+            <code style="font-size:12px;background:rgba(74,93,35,.08);padding:2px 6px">decision_effects</code>
+            permanece vacía por decisión arquitectónica (D-024).
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <span>Base operacional real · no “producto terminado”</span>
+      <span>13</span>
+    </div>
+  </section>
+
+  <!-- 14 ROADMAP -->
+  <section class="slide" data-title="14 · Roadmap">
+    <div class="meta">
+      <span class="num">14</span>
+      <span class="rule"></span>
+      <span class="sec">Roadmap</span>
+    </div>
+    <div class="body">
+      <div>
+        <p class="kicker">Implementado vs siguiente</p>
+        <h2 class="title">Evolución del producto.</h2>
+        <p class="lede">07 cerrada. El orden oficial continúa con 08–11 según BUILD_ORDER.</p>
+      </div>
+      <div class="timeline" style="flex:0 1 auto;min-height:120px;max-height:34vh">
+        <div class="stop done">
+          <span class="n">07</span>
+          <span class="t">TRACEABILITY</span>
+          <span class="s">Implementado ✓</span>
+        </div>
+        <div class="stop">
+          <span class="n">08</span>
+          <span class="t">TRANSFORMATIONS</span>
+          <span class="s">Roadmap</span>
+        </div>
+        <div class="stop">
+          <span class="n">09</span>
+          <span class="t">OFFLINE</span>
+          <span class="s">Roadmap</span>
+        </div>
+        <div class="stop">
+          <span class="n">10</span>
+          <span class="t">OPERATIONAL VIEW</span>
+          <span class="s">Roadmap</span>
+        </div>
+        <div class="stop">
+          <span class="n">11</span>
+          <span class="t">ANALYTICS</span>
+          <span class="s">Roadmap</span>
+        </div>
+      </div>
+      <div class="stack" style="gap:0;max-width:72ch">
+        <p style="font-size:15px;font-weight:650;padding:14px 0;border-bottom:1px solid var(--line);line-height:1.45">
+          En operación: lotes, inspecciones, evaluación, decisiones e historia del lote.
+        </p>
+        <p style="font-size:15px;font-weight:650;padding:14px 0;border-bottom:1px solid var(--line);line-height:1.45">
+          Pendiente de decisión: matriz PUNTO + DECISIÓN → ETAPA/ESTADO.
+        </p>
+        <p style="font-size:15px;font-weight:650;padding:14px 0;line-height:1.45;color:var(--muted)">
+          No se adelanta: genealogía, offline, view operacional ni analítica.
+        </p>
+      </div>
+    </div>
+    <div class="foot">
+      <span>08–11 no se presentan como implementadas</span>
+      <span>14</span>
+    </div>
+  </section>
+
+  <!-- 15 CIERRE -->
+  <section class="slide olive" data-title="15 · Cierre">
+    <div class="meta">
+      <span class="num">15</span>
+      <span class="rule"></span>
+      <span class="sec">Cierre</span>
+    </div>
+    <div class="close-wrap">
+      <img class="logo" src="assets/logos/logotipo_horizontal.png" alt="NX Quality" />
+      <p class="big">Del lote a la <span class="hi">trazabilidad</span>.</p>
+      <p class="who">NX Quality · NXChile</p>
+      <div class="cta-row" style="margin-top:12px">
+        <a class="cta" id="closeDemo" href="http://localhost:3000" target="_blank" rel="noopener">ABRIR DEMO <span class="arrow">→</span></a>
+        <span class="cta-note">Demo local · localhost:3000</span>
+      </div>
+      <div class="truth" style="margin-top:clamp(20px,3vh,36px);opacity:.7;font-size:clamp(13px,1.3vw,16px)">
+        <span>LOTE</span><span class="sep">→</span>
+        <span>INSPECCIÓN</span><span class="sep">→</span>
+        <span>MEDICIÓN</span><span class="sep">→</span>
+        <span>EVALUACIÓN</span><span class="sep">→</span>
+        <span>DECISIÓN</span><span class="sep">→</span>
+        <span>HISTORIA</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- chrome -->
+<div class="hint" id="hint">← → · F fullscreen · I índice · D demo</div>
+<div class="chrome">
+  <div class="progress-wrap">
+    <div class="progress"><i id="bar"></i></div>
+    <span class="counter" id="counter">01 / 15</span>
+  </div>
+  <div class="nav">
+    <button type="button" id="btnIndex" title="Índice">Índice</button>
+    <button type="button" id="btnFs" title="Pantalla completa">⛶</button>
+    <button type="button" class="accent" id="btnDemo" title="Demo local">Demo local</button>
+    <button type="button" id="btnPrev" aria-label="Anterior">←</button>
+    <button type="button" id="btnNext" aria-label="Siguiente">→</button>
+  </div>
+</div>
+
+<!-- índice -->
+<div class="modal" id="modalIndex" aria-hidden="true">
+  <div class="modal-panel">
+    <h3>Índice</h3>
+    <div class="idx-list" id="idxList"></div>
+    <button type="button" class="modal-close" id="btnCloseIndex">CERRAR</button>
+  </div>
+</div>
+
+<!-- demo local -->
+<div class="demo-panel" id="demoPanel" aria-hidden="true">
+  <p class="eyebrow">Demo local · secuencia recomendada</p>
+  <h2>Pasar de la presentación a la aplicación</h2>
+  <p class="lede-d">
+    Secuencia operativa sobre el lote de referencia <strong>E2E Redesign 241</strong>
+    (<code>d8ba1f69-4724-4307-a726-de7c279f80ce</code>).
+    Base: <code id="demoBaseLabel">http://localhost:3000</code>
+  </p>
+  <div class="demo-list">
+    <a id="d1" href="http://localhost:3000/dashboard" target="_blank" rel="noopener">
+      <span class="n">01</span>
+      <span class="t">Dashboard<span>Vista general de operación.</span></span>
+      <span class="go">ABRIR →</span>
+    </a>
+    <a id="d2" href="http://localhost:3000/dashboard/lots" target="_blank" rel="noopener">
+      <span class="n">02</span>
+      <span class="t">Lote<span>Lista y ficha del lote E2E.</span></span>
+      <span class="go">ABRIR →</span>
+    </a>
+    <a id="d3" href="http://localhost:3000/dashboard/inspections" target="_blank" rel="noopener">
+      <span class="n">03</span>
+      <span class="t">Inspección<span>Detalle, criterios y evidencia.</span></span>
+      <span class="go">ABRIR →</span>
+    </a>
+    <a id="d4" href="http://localhost:3000/dashboard/inspections" target="_blank" rel="noopener">
+      <span class="n">04</span>
+      <span class="t">Quality Engine<span>Evaluaciones por criterio.</span></span>
+      <span class="go">ABRIR →</span>
+    </a>
+    <a id="d5" href="http://localhost:3000/dashboard/lots" target="_blank" rel="noopener">
+      <span class="n">05</span>
+      <span class="t">Decisión<span>Registro e historial de decisiones.</span></span>
+      <span class="go">ABRIR →</span>
+    </a>
+    <a id="d6" href="http://localhost:3000/dashboard/lots" target="_blank" rel="noopener">
+      <span class="n">06</span>
+      <span class="t">Historia del lote<span>Timeline de trazabilidad.</span></span>
+      <span class="go">ABRIR →</span>
+    </a>
+  </div>
+  <div class="demo-actions">
+    <a class="cta" id="demoOpen" href="http://localhost:3000" target="_blank" rel="noopener">ABRIR NX QUALITY <span class="arrow">→</span></a>
+    <button type="button" class="cta ghost" id="btnCloseDemo">CERRAR</button>
+    <span class="demo-base">Base: <code id="demoBaseFoot">http://localhost:3000</code></span>
+  </div>
+</div>
+
+<script>
+(function(){
+  const DEMO_BASE_URL = 'http://localhost:3000';
+
+  function applyDemoBase(){
+    const pairs = [
+      ['coverDemo', ''],
+      ['closeDemo', ''],
+      ['demoOpen', ''],
+      ['d1', '/dashboard'],
+      ['d2', '/dashboard/lots'],
+      ['d3', '/dashboard/inspections'],
+      ['d4', '/dashboard/inspections'],
+      ['d5', '/dashboard/lots'],
+      ['d6', '/dashboard/lots']
+    ];
+    pairs.forEach(([id, path]) => {
+      const el = document.getElementById(id);
+      if (el) el.href = DEMO_BASE_URL + path;
+    });
+    const lbl = document.getElementById('demoBaseLabel');
+    const foot = document.getElementById('demoBaseFoot');
+    if (lbl) lbl.textContent = DEMO_BASE_URL;
+    if (foot) foot.textContent = DEMO_BASE_URL;
+  }
+  applyDemoBase();
+
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  const bar = document.getElementById('bar');
+  const counter = document.getElementById('counter');
+  const hint = document.getElementById('hint');
+  const modalIndex = document.getElementById('modalIndex');
+  const idxList = document.getElementById('idxList');
+  const demoPanel = document.getElementById('demoPanel');
+  let i = 0;
+  let touchX = null;
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+
+  function render(){
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
+    bar.style.width = ((i + 1) / total * 100) + '%';
+    counter.textContent = pad(i+1) + ' / ' + pad(total);
+    Array.from(idxList.children).forEach((b, idx) => b.classList.toggle('active', idx === i));
+    document.title = 'NX Quality — ' + (slides[i].dataset.title || 'Presentación');
+  }
+
+  function go(n){
+    i = Math.max(0, Math.min(total - 1, n));
+    render();
+  }
+
+  function next(){ go(i + 1); }
+  function prev(){ go(i - 1); }
+
+  slides.forEach((s, idx) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = s.dataset.title || ('Slide ' + (idx+1));
+    b.addEventListener('click', () => { go(idx); modalIndex.classList.remove('open'); });
+    idxList.appendChild(b);
+  });
+
+  function openIndex(){ modalIndex.classList.add('open'); }
+  function closeIndex(){ modalIndex.classList.remove('open'); }
+  function openDemo(){ demoPanel.classList.add('open'); }
+  function closeDemo(){ demoPanel.classList.remove('open'); }
+
+  function toggleFs(){
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen && document.exitFullscreen();
+    }
+  }
+
+  document.getElementById('btnNext').addEventListener('click', next);
+  document.getElementById('btnPrev').addEventListener('click', prev);
+  document.getElementById('btnIndex').addEventListener('click', openIndex);
+  document.getElementById('btnCloseIndex').addEventListener('click', closeIndex);
+  document.getElementById('btnFs').addEventListener('click', toggleFs);
+  document.getElementById('btnDemo').addEventListener('click', openDemo);
+  document.getElementById('btnCloseDemo').addEventListener('click', closeDemo);
+
+  modalIndex.addEventListener('click', (e) => { if (e.target === modalIndex) closeIndex(); });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { closeIndex(); closeDemo(); return; }
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); next(); return; }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); return; }
+    if (e.key === 'Home') { go(0); return; }
+    if (e.key === 'End') { go(total - 1); return; }
+    if (e.key === 'f' || e.key === 'F') { toggleFs(); return; }
+    if (e.key === 'i' || e.key === 'I') { modalIndex.classList.contains('open') ? closeIndex() : openIndex(); return; }
+    if (e.key === 'd' || e.key === 'D') { demoPanel.classList.contains('open') ? closeDemo() : openDemo(); return; }
+  });
+
+  document.getElementById('deck').addEventListener('click', (e) => {
+    if (e.target.closest('a, button')) return;
+    const x = e.clientX;
+    if (x > window.innerWidth * 0.72) next();
+    else if (x < window.innerWidth * 0.28) prev();
+  });
+
+  document.addEventListener('touchstart', (e) => { touchX = e.changedTouches[0].clientX; }, {passive:true});
+  document.addEventListener('touchend', (e) => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    touchX = null;
+    if (Math.abs(dx) < 50) return;
+    if (dx < 0) next(); else prev();
+  }, {passive:true});
+
+  setTimeout(() => hint.classList.add('hide'), 5000);
+  render();
+})();
+</script>
+</body>
+</html>

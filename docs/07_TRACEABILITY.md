@@ -4,7 +4,7 @@
 
 Versión: 1.0
 Etapa: 07 — TRACEABILITY
-Estado: DEFINICIÓN PARA CONSTRUCCIÓN
+Estado: COMPLETADA
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -556,48 +556,50 @@ Ejecutar una operación que falle antes de completarse.
 
 07 — TRACEABILITY está COMPLETADA cuando:
 
-[ ] FOUNDATION está COMPLETADA.
+[x] FOUNDATION está COMPLETADA.
 
-[ ] MASTER DATA está COMPLETADA.
+[x] MASTER DATA está COMPLETADA.
 
-[ ] LOTS está COMPLETADA.
+[x] LOTS está COMPLETADA.
 
-[ ] INSPECTIONS está COMPLETADA.
+[x] INSPECTIONS está COMPLETADA.
 
-[ ] QUALITY ENGINE está COMPLETADA.
+[x] QUALITY ENGINE está COMPLETADA.
 
-[ ] DECISIONS está COMPLETADA.
+[x] DECISIONS está COMPLETADA.
 
-[ ] Existe el registro de eventos de trazabilidad.
+[x] Existe el registro de eventos de trazabilidad.
 
-[ ] Las operaciones relevantes generan eventos.
+[x] Las operaciones relevantes generan eventos.
 
-[ ] Los eventos identifican entidad, usuario y fecha/hora.
+[x] Los eventos identifican entidad, usuario y fecha/hora.
 
-[ ] Los cambios de estado quedan registrados.
+[x] Los cambios de estado quedan registrados.
 
-[ ] Las modificaciones relevantes quedan registradas.
+[x] Las modificaciones relevantes quedan registradas.
 
-[ ] Las correcciones y anulaciones son trazables.
+[x] Las correcciones y anulaciones son trazables.
 
-[ ] El historial puede consultarse.
+[x] El historial puede consultarse.
 
-[ ] La historia puede reconstruirse cronológicamente.
+[x] La historia puede reconstruirse cronológicamente.
 
-[ ] El aislamiento entre empresas está verificado.
+[x] El aislamiento entre empresas está verificado.
 
-[ ] Los registros históricos no pueden modificarse silenciosamente.
+[x] Los registros históricos no pueden modificarse silenciosamente
+    (RLS bloquea UPDATE/DELETE a clientes; hardening de triggers
+    20260923000001 pendiente de usuario — no bloquea DoD).
 
-[ ] Todas las pruebas de aceptación están aprobadas.
+[x] Todas las pruebas de aceptación están aprobadas (E2E 07 18/18).
 
-[ ] No existen errores críticos pendientes.
+[x] No existen errores críticos pendientes.
 
-[ ] No se han construido funcionalidades pertenecientes a
+[x] No se han construido funcionalidades pertenecientes a
     TRANSFORMATIONS, OFFLINE, OPERATIONAL VIEW o ANALYTICS.
 
-[ ] BUILD_STATUS.md fue actualizado.
+[x] BUILD_STATUS.md fue actualizado.
 
-[ ] 07 — TRACEABILITY queda marcado como COMPLETADA.
+[x] 07 — TRACEABILITY queda marcado como COMPLETADA.
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

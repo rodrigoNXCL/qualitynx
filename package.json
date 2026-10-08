@@ -11,13 +11,17 @@
     "dev:mobile": "npm run dev --workspace=apps/mobile",
     "build:web": "npm run build --workspace=apps/web",
     "build:mobile": "npm run build --workspace=apps/mobile",
-    "lint": "npm run lint --workspaces",
+    "lint": "npm run lint --workspaces && npm run lint:harness",
     "typecheck": "npm run typecheck --workspaces",
     "db:generate": "npm run db:generate --workspace=packages/database",
     "db:push": "npm run db:push --workspace=packages/database",
     "db:studio": "npm run db:studio --workspace=packages/database",
     "db:reset": "npm run db:reset --workspace=packages/database",
-    "migration:new": "npm run migration:new --workspace=packages/database"
+    "migration:new": "npm run migration:new --workspace=packages/database",
+    "check:docs": "node scripts/check-build-status.mjs",
+    "check:docs:backup": "node scripts/check-build-status.mjs --backup",
+    "check:docs:selftest": "node scripts/check-build-status.mjs --selftest",
+    "lint:harness": "node scripts/check-destructive-harnesses.mjs"
   },
   "devDependencies": {
     "turbo": "^2.0.0",

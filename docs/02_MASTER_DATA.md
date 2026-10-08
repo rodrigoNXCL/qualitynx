@@ -4,7 +4,7 @@
 
 Versión: 1.0
 Etapa: 02 — MASTER DATA
-Estado: DEFINICIÓN PARA CONSTRUCCIÓN
+Estado: COMPLETADA
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -106,6 +106,16 @@ Información mínima:
 
 - identificación;
 - nombre o razón social;
+- RUT;
+- dirección;
+- comuna o provincia;
+- ciudad;
+- punto GPS;
+- teléfono;
+- correo;
+- persona de contacto;
+- productor de salida (asociado, uso interno;
+  para informes de embarque — ver D-011);
 - estado;
 - empresa propietaria del registro.
 
@@ -795,48 +805,48 @@ Operación rechazada.
 
 02 — MASTER DATA puede cerrarse solamente cuando:
 
-[ ] FOUNDATION está COMPLETADA.
+[x] FOUNDATION está COMPLETADA.
 
-[ ] Productores funcionan.
+[x] Productores funcionan.
 
-[ ] Campos funcionan.
+[x] Campos funcionan.
 
-[ ] Cuarteles funcionan.
+[x] Cuarteles funcionan.
 
-[ ] Especies funcionan.
+[x] Especies funcionan.
 
-[ ] Variedades funcionan.
+[x] Variedades funcionan.
 
-[ ] Temporadas funcionan.
+[x] Temporadas funcionan.
 
-[ ] Relaciones maestras funcionan.
+[x] Relaciones maestras funcionan.
 
-[ ] Aislamiento multiempresa verificado.
+[x] Aislamiento multiempresa verificado.
 
-[ ] Reglas de duplicidad verificadas.
+[x] Reglas de duplicidad verificadas.
 
-[ ] Estados ACTIVO / INACTIVO funcionan.
+[x] Estados ACTIVO / INACTIVO funcionan.
 
-[ ] La desactivación conserva historial.
+[x] La desactivación conserva historial.
 
-[ ] Modificaciones relevantes quedan auditadas.
+[x] Modificaciones relevantes quedan auditadas.
 
-[ ] Eliminación indebida está controlada.
+[x] Eliminación indebida está controlada.
 
-[ ] Permisos de la etapa están verificados.
+[x] Permisos de la etapa están verificados.
 
-[ ] Casos límite están probados.
+[x] Casos límite están probados.
 
-[ ] Pruebas de aceptación aprobadas.
+[x] Pruebas de aceptación aprobadas.
 
-[ ] No existen pendientes propios de MASTER DATA.
+[x] No existen pendientes propios de MASTER DATA.
 
-[ ] No se han construido funcionalidades pertenecientes a etapas
+[x] No se han construido funcionalidades pertenecientes a etapas
     posteriores.
 
-[ ] BUILD_STATUS.md actualizado.
+[x] BUILD_STATUS.md actualizado.
 
-[ ] Etapa marcada como COMPLETADA.
+[x] Etapa marcada como COMPLETADA.
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

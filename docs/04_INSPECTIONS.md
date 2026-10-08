@@ -2,9 +2,9 @@
 
 # NX QUALITY — INSPECTIONS
 
-Versión: 1.0
+Versión: 1.2
 Etapa: 04 — INSPECTIONS
-Estado: DEFINICIÓN PARA CONSTRUCCIÓN
+Estado: COMPLETADA
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -220,6 +220,98 @@ Calcular/registrar resultado cuando corresponda
 Registrar decisión cuando corresponda
       ↓
 Cerrar inspección
+      ↓
+(Inspección COMPLETADA) Ver informe / Compartir cuando corresponda
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6.1 CONTINUIDAD, MUESTREO E INFORME (corrección operativa 2026-09-23)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Sobre la definición de esta etapa se implementó y verificó el flujo real
+siguiente (detalle y E2E en BUILD_STATUS.md; no inventar reglas nuevas):
+
+1. CONTINUIDAD
+   - Una inspección no termina necesariamente la historia del lote.
+   - Modal CONTINUAR INSPECCIÓN enlaza una nueva inspección a la anterior
+     mediante `previous_inspection_id` (migración 20260923000002).
+   - Solo puede existir una inspección EN CURSO por lote+punto
+     (constraint `idx_inspecciones_open_unique`); el re-enlace se gestiona
+     al continuar sobre el huerto vigente.
+
+2. MUESTREO CON MUESTRAS
+   - Destino de captura: Consolidado o muestra activa (M01, M02, …).
+   - Mediciones y evidencia pueden asociarse a la muestra
+     (`inspection_evidence.sample_id`).
+   - **Unidad física de N (2026-09-24):** N (sugerido y realizado) se
+     expresa en **unidades de muestreo** del plan (`sampling_unit`,
+     p.ej. envase), **no en kg**.
+     N sugerido = CEIL(kg teóricos / 1.000 × 10) en unidades; es solo
+     **recomendación** (no bloquea ni se valida al completar).
+   - **Consolidado automático al completar (2026-09-24)** — sin acción
+     manual del inspector; sin bloqueo "Consolida…":
+     - N real = 1 → consolidado = **copia exacta** de esa muestra;
+     - N real > 1 → **NO** se genera valor consolidado (agregación por
+       tipo de criterio = **PENDIENTE DE ESPECIFICACIÓN**);
+     - **Prohibido** "primer valor no vacío", promedios u otras fórmulas
+       inventadas.
+   - Validación de cierre **solo contra muestras generadas (N real)**,
+     no contra N sugerido.
+   - Tamaño/cantidad automática de muestra: PENDIENTE DE IMPLEMENTACIÓN
+     (sin regla universal en método/protocolo; no inventar).
+
+3. RECOMENDACIÓN
+   - Campo `recommendation` en la inspección (UI + persistencia en saveInfo).
+
+4. INFORME
+   - Ruta: `/dashboard/inspections/[id]/report`
+   - Contenido: contexto, continuidad (prev), recomendación, muestras,
+     tabla consolidado, tabla por muestra, evidencia.
+   - Sección 4 consolidado: solo N=1 muestra copia; N>1 sin valor
+     consolidado (mensaje y leyenda según regla anterior).
+   - Sección 5 muestreo: N sugerido en unidades + peso/envase + peso total.
+   - Acciones: `window.print()` (CSS `#inspection-report`), share/clipboard.
+   - Botones Ver informe / Compartir en detalle COMPLETADA.
+
+5. MENÚ INFORMES (hub; D-026 / D-028)
+   - Grupo **Informes** → `/dashboard/reports`.
+   - Dos capacidades visibles: **Informe Histórico de Lote** y
+     **Informe de Calidad de Embarque**.
+   - Buscador ampliado: folio QualityNX, productor (datalist), fecha
+     desde/hasta, punto, estado, clase comercial, semáforo.
+   - Enlaza informes de inspección reales, historial de lote
+     (`/dashboard/lots/[id]/report`), calidad de embarque
+     (`/dashboard/reports/shipment`) y trazabilidad de lotes;
+     no duplica operación. Genealogía/envío = fases posteriores.
+
+6. CLASIFICACIÓN + SEMÁFORO (D-027 / D-028)
+   - Al cierre: QE → IA best-effort → clasificación → COMPLETADA.
+   - Chips en detalle; sección en informe de inspección.
+   - Semáforo operacional QualityNX (no SAG); IA no elige color.
+   - Lotes: círculo de color fuera del detalle; filtro “Sin clasificación”.
+   - Informe de lote: sección final **ANÁLISIS HISTÓRICO — QUALITYNX IA**
+     (`POST /api/ai/analyze-lot`; solo datos reales; no modifica historia).
+
+6.2 BUSCAR LOTE → NUEVA INSPECCIÓN (D-028)
+   - Flujo principal: BUSCAR LOTE (folio QualityNX + folio interno +
+     productor/bloque/guía/especie/variedad/fecha/punto/estado) → ficha
+     (folio, producto, productor, variedad, tipo de lote, kg declarados,
+     última inspección+fecha, estado, clase, semáforo, [Ver historial],
+     [Nueva inspección]) → elegir nuevo punto → crear `inspection_id`
+     nuevo en el mismo `lot_id`.
+   - Puntos actuales como botones en la ficha (D-029): elegir un punto
+     abre la nueva inspección con ese punto preseleccionado, sin volver
+     al listado.
+   - Búsqueda por guía devuelve todos los lotes de esa guía (guía
+     multilote, D-029).
+   - No se edita ni reutiliza la inspección anterior; COMPLETADA no cierra
+     el lote. Contexto previo visible antes de abrir.
+
+7. VERIFICACIÓN
+   - E2E continuidad `scripts/e2e_inspection_continuity.py`: 27/27 PASS.
+   - Regresiones serie estricta: 04 30/30, 05 23/23, 06 12/12, 07 18/18.
+   - typecheck 0; lint 0 errores; build OK (incl. reports/lote/shipment/
+     analyze-lot; 21 rutas).
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -590,54 +682,74 @@ Crear y completar una inspección sin conexión.
 
 04 — INSPECTIONS está COMPLETADA cuando:
 
-[ ] FOUNDATION está COMPLETADA.
+[x] FOUNDATION está COMPLETADA.
 
-[ ] MASTER DATA está COMPLETADA.
+[x] MASTER DATA está COMPLETADA.
 
-[ ] LOTS está COMPLETADA.
+[x] LOTS está COMPLETADA.
 
-[ ] Se puede crear una inspección asociada a un lote.
+[x] Se puede crear una inspección asociada a un lote.
 
-[ ] Se identifica inspector.
+[x] Se identifica inspector.
 
-[ ] Se identifica punto de evaluación.
+[x] Se identifica punto de evaluación.
 
-[ ] Se registra fecha/hora.
+[x] Se registra fecha/hora.
 
-[ ] Funcionan las mediciones configuradas.
+[x] Funcionan las mediciones configuradas.
 
-[ ] Funcionan las muestras.
+[x] Funcionan las muestras.
 
-[ ] Funcionan las validaciones.
+[x] Funcionan las validaciones.
 
-[ ] Funciona la evidencia fotográfica obligatoria.
+[x] Funciona la evidencia fotográfica obligatoria.
 
-[ ] Funcionan las observaciones.
+[x] Funcionan las observaciones.
 
-[ ] Se puede registrar el resultado.
+[x] Se puede registrar el resultado.
 
-[ ] Se puede registrar una decisión.
+[x] Se puede registrar una decisión.
 
-[ ] Resultado y decisión permanecen diferenciados.
+[x] Resultado y decisión permanecen diferenciados.
 
-[ ] Funcionan los estados EN CURSO y COMPLETADA.
+[x] Funcionan los estados EN CURSO y COMPLETADA.
 
-[ ] La trazabilidad de modificaciones funciona.
+[x] La trazabilidad de modificaciones funciona.
 
-[ ] El aislamiento entre empresas está verificado.
+[x] El aislamiento entre empresas está verificado.
 
-[ ] La captura básica funciona offline.
+[ ] Captura básica offline verificable. (etapa 09 OFFLINE — fuera del alcance de 04)
 
-[ ] Todas las pruebas de aceptación están aprobadas.
+[x] Continuidad, muestreo con muestras e informe verificados (E2E 27/27; §6.1).
 
-[ ] No existen errores críticos pendientes.
+[x] Unidad física de N (unidades, no kg) y consolidado automático
+    N=1/N>1 verificados en UI + validación de cierre (§6.1; 2026-09-24).
 
-[ ] No se han construido funcionalidades pertenecientes a
-    QUALITY ENGINE, DECISIONS, TRACEABILITY o TRANSFORMATIONS.
+[x] Menú INFORMES `/dashboard/reports` implementado (D-026; §6.1).
 
-[ ] BUILD_STATUS.md fue actualizado.
+[x] Clasificación comercial + semáforo al cierre, informe y filtros de lote
+    implementados (D-027; §6.1); migración en repo 20260924000003.
 
-[ ] 04 — INSPECTIONS queda marcado como COMPLETADA.
+[x] Buscar lote → ficha → nueva inspección (nuevo inspection_id en el
+    mismo lote) implementado (D-028; §6.2).
+
+[x] Hub Informes con dos capacidades + buscador ampliado; informe histórico
+    con análisis IA; informe embarque con contexto completo (D-028).
+
+[x] Cierre único D-029: puntos como botones (apertura directa), búsqueda
+    por folio interno/guía ampliada, flujo hub buscar→seleccionar→elegir
+    informe, identidad completa en informes y PDF solo del documento.
+
+[x] Todas las pruebas de aceptación de 04 están aprobadas.
+
+[x] No existen errores críticos pendientes propios de 04.
+
+[x] Al cierre de 04 no se habían construido QUALITY ENGINE, DECISIONS,
+    TRACEABILITY ni TRANSFORMATIONS (etapas posteriores según BUILD_ORDER).
+
+[x] BUILD_STATUS.md fue actualizado.
+
+[x] 04 — INSPECTIONS queda marcado como COMPLETADA.
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

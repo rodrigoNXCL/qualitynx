@@ -13,17 +13,18 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NX Quality",
-  description: "Control de calidad operativa para exportadoras y precstadores de inspección.",
+  title: 'QualityNX — Control de calidad de fruta',
+  description:
+    'Plataforma operacional de calidad y trazabilidad para productores, packings y exportadoras.',
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-[#f4f5f0]">{children}</body>
     </html>
   );
 }

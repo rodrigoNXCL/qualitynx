@@ -4,7 +4,7 @@
 
 Versión: 1.0
 Etapa: 05 — QUALITY ENGINE
-Estado: DEFINICIÓN PARA CONSTRUCCIÓN
+Estado: COMPLETADA
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -614,50 +614,61 @@ Intentar evaluar una medición con unidad incompatible.
 
 05 — QUALITY ENGINE está COMPLETADA cuando:
 
-[ ] FOUNDATION está COMPLETADA.
+[x] FOUNDATION está COMPLETADA.
 
-[ ] MASTER DATA está COMPLETADA.
+[x] MASTER DATA está COMPLETADA.
 
-[ ] LOTS está COMPLETADA.
+[x] LOTS está COMPLETADA.
 
-[ ] INSPECTIONS está COMPLETADA.
+[x] INSPECTIONS está COMPLETADA.
 
-[ ] Existe el modelo de criterios.
+[x] Existe el modelo de criterios.
 
-[ ] Los criterios configurables funcionan.
+[x] Los criterios configurables funcionan.
 
-[ ] Funcionan criterios mínimos.
+[x] Funcionan criterios mínimos.
 
-[ ] Funcionan criterios máximos.
+[x] Funcionan criterios máximos.
 
-[ ] Funcionan rangos.
+[x] Funcionan rangos.
 
-[ ] Funciona la identificación del criterio aplicable.
+[x] Funciona la identificación del criterio aplicable.
 
-[ ] Funciona CUMPLE.
+[x] Funciona CUMPLE.
 
-[ ] Funciona DESVIACIÓN.
+[x] Funciona DESVIACIÓN.
 
-[ ] Funciona SIN CRITERIO.
+[x] Funciona SIN CRITERIO.
 
-[ ] Se conserva el criterio utilizado.
+[x] Se conserva el criterio utilizado.
 
-[ ] Se conserva el contexto histórico.
+[x] Se conserva el contexto histórico.
 
-[ ] Cambios posteriores de criterio no reinterpretan el pasado.
+[x] Cambios posteriores de criterio no reinterpretan el pasado.
 
-[ ] El motor no toma decisiones automáticamente sobre el lote.
+[x] El motor no toma decisiones automáticamente sobre el lote.
 
-[ ] Las pruebas de aceptación están aprobadas.
+[x] Las pruebas de aceptación están aprobadas (E2E quality 22/22; regresión serie 23/23).
 
-[ ] No existen errores críticos pendientes.
+[x] No existen errores críticos pendientes.
 
-[ ] No se han construido funcionalidades pertenecientes a DECISIONS,
-    TRACEABILITY, TRANSFORMATIONS u ANALYTICS.
+[x] No se han construido funcionalidades pertenecientes a
+    DECISIONS, TRACEABILITY, TRANSFORMATIONS u ANALYTICS.
 
-[ ] BUILD_STATUS.md fue actualizado.
+[x] BUILD_STATUS.md fue actualizado.
 
-[ ] 05 — QUALITY ENGINE queda marcado como COMPLETADA.
+[x] 05 — QUALITY ENGINE queda marcado como COMPLETADA.
+
+NOTA SAMPLE-AWARE (2026-09-23, verificado en corrección de flujo;
+actualizada 2026-09-24):
+"Evaluar calidad" y el cierre de inspección son sample-aware
+(consolidado + mediciones por muestra cuando hay muestras activas).
+Consolidado al cierre es **automático**: N real = 1 → copia exacta de la
+muestra; N real > 1 → sin valor consolidado (agregación por tipo de
+criterio PENDIENTE DE ESPECIFICACIÓN; no inventar promedios ni
+"primer valor no vacío"). El QE opera sobre el conjunto de mediciones
+resultante; no inventa tamaño/cantidad de muestra (PENDIENTE DE
+IMPLEMENTACIÓN).
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
