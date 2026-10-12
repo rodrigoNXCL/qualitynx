@@ -37,12 +37,11 @@ export default function LandingPage() {
         <div className="relative mx-auto max-w-4xl text-center">
           <p className="mb-6 text-xs font-bold uppercase tracking-[0.2em] text-[#8fa868]">Trazabilidad y Control de Calidad</p>
           <h1 className="text-4xl font-bold leading-[1.1] tracking-[-0.03em] md:text-6xl lg:text-[4.5rem]">
-            Toda la historia de calidad<br className="hidden md:block" /> de cada lote.
-            <br />
+            Toda la historia de calidad<br className="hidden md:block" /> de cada lote.<br />
             <span className="text-[#8fa868]">En un solo lugar.</span>
           </h1>
           <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-[#999] md:text-xl">
-            QualityNX centraliza inspecciones, resultados, fotografías y trazabilidad para que puedas reconstruir y consultar el historial de calidad de cada lote.
+            Inspecciones, muestreos, mediciones, evidencia, decisiones documentadas y trazabilidad vinculadas al lote para productores, packings y exportadoras.
           </p>
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <a
@@ -88,60 +87,47 @@ export default function LandingPage() {
             Ejemplo ilustrativo de cómo se organiza la información. No corresponde a una operación real.
           </p>
           <div className="mx-auto grid max-w-3xl gap-6 md:grid-cols-2">
-            {/* Ficha */}
-            <div className="rounded-2xl border border-[#1a1a1a]/10 bg-white p-6 shadow-sm">
-              <div className="mb-4 flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#8fa868]">Lote</span>
-                <span className="rounded-full bg-[#4A5D23]/10 px-3 py-1 text-xs font-bold text-[#4A5D23]">APROBADO</span>
+            {/* Mockup ilustrativo — datos de ejemplo, sin operación real */}
+            <div className="rounded-2xl border border-[#1a1a1a]/10 bg-[#1a1a1a] p-6 shadow-xl">
+              <div className="flex items-center justify-between mb-5">
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-[#8fa868]">Ejemplo ilustrativo</p>
+                  <h3 className="text-xl font-bold text-white tracking-tight">Lote #2026-0847</h3>
+                </div>
+                <span className="rounded-full bg-[#8fa868]/20 px-3 py-1 text-xs font-bold text-[#8fa868]">APROBADO</span>
               </div>
-              <p className="mb-1 text-2xl font-bold tracking-tight">#2026-0847</p>
-              <div className="mt-6 space-y-3 text-sm">
-                {[
-                  ['Variedad', 'Highbush'],
-                  ['Productor', 'XXXXXXXX'],
-                  ['Fecha recepción', '18/09/2026'],
-                ].map(([label, value]) => (
-                  <div key={label} className="flex justify-between border-b border-[#1a1a1a]/5 pb-2">
-                    <span className="text-[#888]">{label}</span>
-                    <span className="font-medium text-[#1a1a1a]">{value}</span>
-                  </div>
-                ))}
+              <div className="grid gap-3 text-sm">
+                <div className="flex justify-between border-b border-white/10 pb-2"><span className="text-[#999]">Variedad</span><span className="font-medium text-white">Highbush</span></div>
+                <div className="flex justify-between border-b border-white/10 pb-2"><span className="text-[#999]">Productor</span><span className="font-medium text-white">Ejemplo operativo</span></div>
+                <div className="flex justify-between border-b border-white/10 pb-2"><span className="text-[#999]">Fecha recepción</span><span className="font-medium text-white">18/09/2026</span></div>
+                <div className="flex justify-between border-b border-white/10 pb-2"><span className="text-[#999]">Estado</span><span className="font-medium text-[#8fa868]">Aprobado</span></div>
               </div>
-              <div className="mt-6 rounded-xl bg-[#f7f6f2] p-4">
-                <p className="mb-3 text-xs font-bold uppercase tracking-wider text-[#8fa868]">Calidad</p>
-                <div className="grid grid-cols-3 gap-3 text-center">
-                  {[
-                    ['2,4%', 'Defectos'],
-                    ['18 mm', 'Calibre'],
-                    ['1,8 °C', 'Temperatura'],
-                  ].map(([val, label]) => (
-                    <div key={label}>
-                      <p className="text-lg font-bold">{val}</p>
-                      <p className="text-xs text-[#888]">{label}</p>
-                    </div>
-                  ))}
+              <div className="mt-5 rounded-xl bg-white/5 p-4">
+                <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-[#8fa868]">Calidad registrada</p>
+                <div className="grid grid-cols-3 gap-2 text-center text-sm">
+                  <div><p className="font-bold text-white">2,4%</p><p className="text-[10px] text-[#999]">Defectos</p></div>
+                  <div><p className="font-bold text-white">18 mm</p><p className="text-[10px] text-[#999]">Calibre</p></div>
+                  <div><p className="font-bold text-white">1,8 °C</p><p className="text-[10px] text-[#999]">Temperatura</p></div>
                 </div>
               </div>
-              <div className="mt-4 flex items-center gap-4 text-xs text-[#888]">
-                <span>Fotografías: 24</span>
+              <div className="mt-4 flex items-center gap-4 text-xs text-[#777]">
                 <span>Inspecciones: 2</span>
+                <span>Muestreo: plan activo</span>
+                <span>Decisión: documentada</span>
+                <span>Evidencia: 24 fotos</span>
               </div>
             </div>
-            {/* Historial */}
+            {/* Historial ilustrativo */}
             <div className="flex flex-col justify-center rounded-2xl border border-[#1a1a1a]/10 bg-white p-6 shadow-sm">
-              <p className="mb-6 text-sm font-bold uppercase tracking-wider text-[#8fa868]">Historial del lote</p>
+              <p className="mb-6 text-sm font-bold uppercase tracking-wider text-[#8fa868]">Historial ilustrativo del lote</p>
               <div className="space-y-0">
-                {['Recepción', 'Inspección', 'Selección', 'Embalaje', 'Despacho', 'Destino'].map((stage, i, arr) => (
+                {['Recepción', 'Inspección', 'Evaluación de calidad', 'Decisión documentada', 'Embalaje', 'Despacho', 'Destino'].map((stage, i, arr) => (
                   <div key={stage} className="flex items-start gap-3">
                     <div className="flex flex-col items-center">
-                      <div className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold text-white ${i === arr.length - 1 ? 'bg-[#8fa868]' : 'bg-[#4A5D23]'}`}>
-                        {i + 1}
-                      </div>
+                      <div className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold text-white ${i === arr.length - 1 ? 'bg-[#8fa868]' : 'bg-[#4A5D23]'}`}>{i + 1}</div>
                       {i < arr.length - 1 && <div className="h-6 w-px bg-[#4A5D23]/30" />}
                     </div>
-                    <div className="pt-0.5">
-                      <p className="text-sm font-medium text-[#1a1a1a]">{stage}</p>
-                    </div>
+                    <div className="pt-0.5"><p className="text-sm font-medium text-[#1a1a1a]">{stage}</p></div>
                   </div>
                 ))}
               </div>
