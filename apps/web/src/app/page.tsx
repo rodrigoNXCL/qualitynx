@@ -82,8 +82,11 @@ export default function LandingPage() {
       {/* ===== 3. FICHA DE LOTE ===== */}
       <section className="bg-[#f0efe9] px-6 py-20 md:px-8" id="lote">
         <div className="mx-auto max-w-5xl">
-          <p className="mb-3 text-center text-xs font-bold uppercase tracking-[0.2em] text-[#8fa868]">Lo que verás</p>
-          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">Una ficha de lote en QualityNX.</h2>
+          <p className="mb-3 text-center text-xs font-bold uppercase tracking-[0.2em] text-[#8fa868]">Estructura de información</p>
+          <h2 className="mb-4 text-center text-3xl font-bold tracking-tight md:text-4xl">Una ficha de lote en QualityNX.</h2>
+          <p className="mx-auto mb-10 max-w-2xl text-center text-sm leading-relaxed text-[#777]">
+            Ejemplo ilustrativo de cómo se organiza la información. No corresponde a una operación real.
+          </p>
           <div className="mx-auto grid max-w-3xl gap-6 md:grid-cols-2">
             {/* Ficha */}
             <div className="rounded-2xl border border-[#1a1a1a]/10 bg-white p-6 shadow-sm">
@@ -230,16 +233,18 @@ export default function LandingPage() {
           <h2 className="mb-14 text-center text-3xl font-bold tracking-tight md:text-4xl">
             Toda la información que necesitas.<br />Vinculada al lote.
           </h2>
-          <div className="grid gap-8 sm:grid-cols-2">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {[
               ['Identificación', ['Lote', 'Variedad', 'Productor', 'Fecha', 'Origen', 'Temporada']],
               ['Calidad', ['Defectos', 'Calibre', 'Temperatura', 'Condición', 'Estado', 'Resultados']],
               ['Evidencia', ['Fotografías', 'Inspecciones', 'Observaciones', 'Responsable', 'Fecha y hora']],
               ['Trazabilidad', ['Recepción', 'Inspección', 'Selección', 'Embalaje', 'Despacho', 'Destino']],
+              ['Muestreo', ['Plan de muestreo', 'Muestras tomadas', 'Tamaño de muestra', 'Unidad de medida', 'Continuidad entre inspecciones']],
+              ['Normativa', ['Referencias por criterio', 'SAG Chile', 'UNECE FFV-57', 'Codex Alimentarius', 'USDA AMS']],
             ].map(([title, items]) => (
               <div key={title as string} className="rounded-2xl border border-[#1a1a1a]/8 bg-white p-6 shadow-sm">
                 <p className="mb-4 text-xs font-bold uppercase tracking-wider text-[#8fa868]">{title}</p>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid gap-2">
                   {(items as string[]).map((item) => (
                     <div key={item} className="flex items-center gap-2 text-sm text-[#555]">
                       <span className="h-1 w-1 rounded-full bg-[#4A5D23]" />
@@ -250,6 +255,9 @@ export default function LandingPage() {
               </div>
             ))}
           </div>
+          <p className="mx-auto mt-8 max-w-3xl text-center text-sm leading-relaxed text-[#777]">
+            Cada empresa configura sus propios criterios de calidad. Las referencias normativas asociables a cada criterio se mantienen cargadas y disponibles: SAG Chile, UNECE FFV-57, Codex Alimentarius FAO/WHO y USDA Agricultural Marketing Service.
+          </p>
         </div>
       </section>
 
@@ -296,44 +304,44 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ===== 10. OPERACIÓN EN TERRENO ===== */}
-      <section className="bg-[#1a1a1a] px-6 py-20 text-white md:px-8">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#8fa868]">Operación en terreno</p>
-          <h2 className="mb-6 text-3xl font-bold tracking-tight md:text-4xl">
-            Calidad también ocurre donde<br className="hidden md:block" /> la conectividad no siempre está disponible.
-          </h2>
-          <p className="mx-auto max-w-2xl text-lg leading-relaxed text-white/60">
-            QualityNX está diseñado para llevar el registro de inspecciones al terreno, manteniendo la información asociada al lote incluso en operaciones donde la conectividad puede ser limitada.
+      {/* ===== 10. OPERACIÓN EN TERRENO (capacidad en desarrollo) ===== */}
+      <section className="bg-[#FAFAF7] px-6 py-10 md:px-8">
+        <div className="mx-auto flex max-w-4xl flex-col items-center gap-3 text-center sm:flex-row sm:text-left">
+          <span className="flex-shrink-0 rounded-full bg-[#4A5D23]/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#4A5D23]">
+            En desarrollo
+          </span>
+          <p className="text-base leading-relaxed text-[#666]">
+            <span className="font-semibold text-[#1a1a1a]">Operación en terreno.</span> Estamos desarrollando el registro de inspecciones sin conexión a internet, para que la evidencia pueda capturarse donde la conectividad es limitada y sincronizarse después.
           </p>
-          <p className="mt-4 text-sm font-medium text-[#8fa868]">Próximamente: registro offline para operaciones en terreno.</p>
         </div>
       </section>
 
       {/* ===== 11. IA ===== */}
       <section className="bg-[#FAFAF7] px-6 py-20 md:px-8" id="ia">
         <div className="mx-auto max-w-4xl">
-          <p className="mb-3 text-center text-xs font-bold uppercase tracking-[0.2em] text-[#8fa868]">Inteligencia Artificial</p>
+          <p className="mb-3 text-center text-xs font-bold uppercase tracking-[0.2em] text-[#8fa868]">Inteligencia artificial aplicada</p>
           <h2 className="mb-6 text-center text-3xl font-bold tracking-tight md:text-4xl">
-            Ahora puedes preguntarle<br className="hidden md:block" /> a tu historial.
+            Un análisis que apoya<br className="hidden md:block" /> la evaluación técnica.
           </h2>
-          <p className="mx-auto mb-12 max-w-2xl text-center text-lg leading-relaxed text-[#666]">
-            Cuando la información de calidad está estructurada y relacionada, la IA puede ayudarte a encontrar patrones, responder preguntas y consultar el conocimiento acumulado de tu operación.
+          <p className="mx-auto mb-10 max-w-2xl text-center text-lg leading-relaxed text-[#666]">
+            Cuando la inspección está registrada con sus mediciones, evidencia y criterios, el sistema puede ejecutar un análisis asistido que ordena los hallazgos y los presenta a quien realiza la evaluación técnica.
           </p>
-          <div className="space-y-4">
+          <div className="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2">
             {[
-              'Muéstrame los lotes de esta variedad que presentaron más de 3% de defectos.',
-              '¿Qué defectos fueron más frecuentes durante esta temporada?',
-              '¿Qué productores presentaron mayor incidencia de este defecto durante las últimas tres temporadas?',
-              'Muéstrame el historial de este lote.',
-            ].map((q) => (
-              <div key={q} className="rounded-xl border border-[#1a1a1a]/8 bg-white px-6 py-4 text-sm text-[#555] shadow-sm italic">
-                &ldquo;{q}&rdquo;
+              'Organiza los hallazgos registrados en la inspección',
+              'Contrasta las mediciones contra los criterios definidos',
+              'Apoya el análisis sin emitir juicios de aceptación',
+              'Deja la decisión final registrada en la trazabilidad del lote',
+            ].map((item) => (
+              <div key={item} className="flex items-start gap-3 rounded-xl border border-[#1a1a1a]/8 bg-white px-5 py-4 text-left text-sm font-medium text-[#555] shadow-sm">
+                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#4A5D23]" />
+                {item}
               </div>
             ))}
           </div>
-          <p className="mt-10 text-center text-sm font-medium text-[#888]">
-            La IA no reemplaza tus registros.<br />Los convierte en información que puedes consultar.
+          <p className="mx-auto mt-10 max-w-2xl text-center text-sm font-medium leading-relaxed text-[#888]">
+            La IA no reemplaza la evaluación técnica ni la decisión humana.
+            <br />La decisión de aceptar o rechazar un lote sigue siendo de tu equipo, y queda documentada.
           </p>
         </div>
       </section>
@@ -344,12 +352,12 @@ export default function LandingPage() {
           <h2 className="mb-14 text-center text-3xl font-bold tracking-tight md:text-4xl">¿Qué hace diferente a QualityNX?</h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              ['Información vinculada al lote', 'Todo parte del lote y permanece relacionado con él.'],
-              ['Historial', 'La operación de hoy construye la memoria de la empresa.'],
-              ['Evidencia', 'Las fotografías y registros permanecen vinculados a la información correspondiente.'],
-              ['Consulta', 'La información histórica puede recuperarse y analizarse.'],
-              ['IA aplicada', 'La IA trabaja sobre el conocimiento acumulado de la empresa.'],
-              ['Operación en terreno', 'Diseñado para operación en terreno, con funcionalidad offline en desarrollo.'],
+              ['Todo parte del lote', 'Inspecciones, mediciones, evidencia, decisiones e informes permanecen vinculados al lote.'],
+              ['Criterios configurables', 'Cada empresa define sus propios controles de calidad, con referencias normativas asociables.'],
+              ['Muestreo documentado', 'Planes de muestreo, muestras tomadas y unidad de medida quedan registrados con la inspección.'],
+              ['Decisión documentada', 'La decisión de aceptar o rechazar queda registrada, con su fundamento y responsable.'],
+              ['Historial consultable', 'La operación de hoy construye la memoria de calidad de la empresa.'],
+              ['Transformaciones', 'Mezclas, divisiones y reprocesos quedan trazados, con sus entradas, salidas y existencias.'],
             ].map(([title, desc]) => (
               <div key={title as string} className="rounded-2xl border border-[#1a1a1a]/8 bg-white p-6 shadow-sm">
                 <p className="text-lg font-bold">{title}</p>
@@ -380,13 +388,16 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ===== 13. PRUEBA SOCIAL ===== */}
+      {/* ===== 13. ESTADO DEL PRODUCTO ===== */}
       <section className="bg-[#1a1a1a] px-6 py-20 text-white md:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#8fa868]">Próximas implementaciones</p>
-          <h2 className="mb-8 text-3xl font-bold tracking-tight md:text-4xl">QualityNX está preparado para comenzar.</h2>
-          <p className="text-lg leading-relaxed text-white/60">
-            QualityNX está preparado para comenzar sus primeras implementaciones en productores, packings y exportadoras de fruta. Pronto incorporaremos experiencias y resultados de operaciones reales.
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#8fa868]">Estado del producto</p>
+          <h2 className="mb-8 text-3xl font-bold tracking-tight md:text-4xl">Una plataforma construida, no un concepto.</h2>
+          <p className="text-lg leading-relaxed text-white/70">
+            QualityNX ya opera con maestros de datos, lotes, inspecciones, planes de muestreo, mediciones, evidencia fotográfica, evaluación de calidad, decisiones documentadas, trazabilidad, transformaciones e informes.
+          </p>
+          <p className="mt-6 text-lg leading-relaxed text-white/70">
+            Estamos acompañando las primeras implementaciones junto a operaciones reales de productores, packings y exportadoras.
           </p>
         </div>
       </section>
@@ -459,6 +470,7 @@ export default function LandingPage() {
           <p className="mb-10 text-center text-base text-[#666]">Te mostramos QualityNX aplicado a tu operación.</p>
           <LeadForm />
           <p className="mt-6 text-center text-sm text-[#888]">Te contactaremos para conocer brevemente tu operación y coordinar una demostración.</p>
+          <p className="mt-2 text-center text-xs text-[#777]">Usamos tus datos únicamente para coordinar la demostración. No los compartimos con terceros.</p>
         </div>
       </section>
 

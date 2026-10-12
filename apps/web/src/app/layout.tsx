@@ -13,9 +13,30 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'QualityNX — Control de calidad de fruta',
+  title: 'QualityNX | Trazabilidad y control de calidad de lotes frutícolas',
   description:
-    'Plataforma operacional de calidad y trazabilidad para productores, packings y exportadoras.',
+    'QualityNX permite reconstruir la historia de calidad de cada lote: inspecciones, mediciones, evidencia, decisiones, trazabilidad y transformaciones para productores, packings y exportadoras.',
+  metadataBase: new URL('https://quality.nxchile.com'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'es_CL',
+    url: 'https://quality.nxchile.com',
+    siteName: 'QualityNX',
+    title: 'QualityNX | Trazabilidad y control de calidad de lotes frutícolas',
+    description: 'Reconstruye la historia de calidad de cada lote. Inspecciones, muestreo, evidencia, decisiones, trazabilidad y transformaciones.',
+    images: [{ url: 'https://quality.nxchile.com/logos/logotipo_horizontal.png', width: 2172, height: 724, alt: 'QualityNX logo' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    creator: '@NXChile',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
