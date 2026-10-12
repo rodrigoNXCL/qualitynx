@@ -14,6 +14,7 @@ export default function LandingPage() {
           <div className="flex items-center gap-4 text-sm font-medium text-[#555] md:gap-8">
             <a href="#producto" className="hidden md:inline-block hover:text-[#4A5D23] transition-colors">Producto</a>
             <a href="#capacidades" className="hidden md:inline-block hover:text-[#4A5D23] transition-colors">Capacidades</a>
+            <Link href="/login" className="hidden md:inline-block text-sm font-medium text-[#555] hover:text-[#4A5D23] transition-colors">Acceso</Link>
             <a href="#demo" className="rounded-full bg-[#4A5D23] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#3a4d1b] transition-all">Solicitar demo</a>
           </div>
         </nav>
